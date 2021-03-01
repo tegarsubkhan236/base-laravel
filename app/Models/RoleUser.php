@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class RoleUser
  * 
- * @property int $role_id
  * @property int $user_id
+ * @property int $role_id
  * 
- * @property Role $role
  * @property User $user
+ * @property Role $role
  *
  * @package App\Models
  */
@@ -26,22 +26,22 @@ class RoleUser extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'role_id' => 'int',
-		'user_id' => 'int'
+		'user_id' => 'int',
+		'role_id' => 'int'
 	];
 
 	protected $fillable = [
-		'role_id',
-		'user_id'
+		'user_id',
+		'role_id'
 	];
-
-	public function role()
-	{
-		return $this->belongsTo(Role::class);
-	}
 
 	public function user()
 	{
 		return $this->belongsTo(User::class);
+	}
+
+	public function role()
+	{
+		return $this->belongsTo(Role::class);
 	}
 }

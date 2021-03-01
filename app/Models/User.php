@@ -7,44 +7,37 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable as Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class User
- * 
+ *
  * @property int $id
- * @property string $name
- * @property string $email
- * @property Carbon|null $email_verified_at
+ * @property string $username
  * @property string $password
- * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Collection|Role[] $roles
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Model implements Authenticatable
 {
+    use AuthenticatableTrait;
+
 	protected $table = 'users';
 
-	protected $dates = [
-		'email_verified_at'
-	];
-
 	protected $hidden = [
-		'password',
-		'remember_token'
+		'password'
 	];
 
 	protected $fillable = [
-		'name',
-		'email',
-		'email_verified_at',
-		'password',
-		'remember_token'
+		'username',
+		'password'
 	];
 
 	public function roles()
