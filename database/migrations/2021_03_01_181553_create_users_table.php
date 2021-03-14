@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->integer('id', true);
             $table->string('username', 100);
             $table->string('password', 100);
+            $table->integer('status')->default(0);
             $table->date('created_at')->nullable();
             $table->date('updated_at')->nullable();
         });

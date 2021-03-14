@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Casts\UserLevel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware($this->allowedAccess([UserLevel::SUPER_ADMIN]))
-            ->only('index');
+        $this->middleware($this->allowedAccess(
+            [
+                UserLevel::SUPER_ADMIN,
+                UserLevel::ADMIN,
+                UserLevel::USER,
+            ]
+        ))->only('index');
     }
 
     public function index()

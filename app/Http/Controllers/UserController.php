@@ -10,7 +10,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware($this->allowedAccess([UserLevel::SUPER_ADMIN]))
-            ->only('user','role');
+            ->only('user','role','role_user');
     }
 
     public function user()

@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function allowedAccess($type = [])
+    public function allowedAccess($type = []): string
     {
         return "gateway:".implode("|",$type);
     }
