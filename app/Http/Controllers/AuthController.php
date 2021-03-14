@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
     public function login_page()
     {
         return view('login');
@@ -17,6 +22,11 @@ class AuthController extends Controller
     public function register_page()
     {
         return view('register');
+    }
+
+    public function register()
+    {
+        //
     }
 
     public function login(Request $req)
@@ -29,16 +39,17 @@ class AuthController extends Controller
         $credentials = [
           "username" => $data['username'],
           "password" => $data['password'],
-//          "status" => UserStatus::ACTIVE,
+          "status" => UserStatus::ACTIVE,
         ];
-        if (Auth::attempt($credentials)){
-            return redirect()->route('dashboard.index');
+        if (! Auth::attempt($credentials)){
+            return redirect()->route('/');
         }
-        return redirect()->route('/');
+        return redirect()->route('dashboard.index');
     }
 
     public function logout()
     {
-        //
+        Auth::logout();
+        return redirect()->route('/');
     }
 }
