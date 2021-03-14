@@ -7,10 +7,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\Authenticatable as Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as Authenticate;
+use Illuminate\Auth\Authenticatable as AuthenticateTrait;
 
 /**
  * Class User
@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $username
  * @property string $password
+ * @property string|null $email
+ * @property int $status
+ * @property string|null $avatar
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -25,11 +28,15 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model implements Authenticatable
+class User extends Model implements Authenticate
 {
-    use AuthenticatableTrait;
+    use AuthenticateTrait;
 
 	protected $table = 'users';
+
+	protected $casts = [
+		'status' => 'int'
+	];
 
 	protected $hidden = [
 		'password'
@@ -37,7 +44,10 @@ class User extends Model implements Authenticatable
 
 	protected $fillable = [
 		'username',
-		'password'
+		'password',
+		'email',
+		'status',
+		'avatar'
 	];
 
 	public function roles()
