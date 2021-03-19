@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 
 class Gateway
 {
@@ -27,33 +28,39 @@ class Gateway
             if (in_array($userRole,$exploded)){
                 $is_must = $userRole;
                 //dashboard menu
-                Event::listen("JeroenNoten\LaravelAdminLte\Events\BuildingMenu",function ($e){
-                    $e->menu->add([
+                Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                    $event->menu->add([
                         "text"=>"Dashboard",
-                        "url"=>"dashboard",
-                        "icon"=>"fa fa-file"
+                        "route"=>"dashboard",
+                        "icon"=>"fa fa-file",
                     ]);
                 });
 
                 switch ($userRole) {
                     case UserLevel::SUPER_ADMIN:
-                        Event::listen("JeroenNoten\LaravelAdminLte\Events\BuildingMenu", function ($e) {
-                            $e->menu->add(['header' => 'User Management']);
-                            $e->menu->add([
+                        Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+                            $event->menu->add(['header' => 'Master Data']);
+                            $event->menu->add([
+                                'key'=>'user',
                                 "text" => "User Manager",
-                                "url" => "super/user",
+                                "route" => "super.user",
                                 "icon" => "fa fa-file"
                             ]);
-                            $e->menu->add(['header' => 'Role Management']);
-                            $e->menu->add([
+//                            $event->menu->addIn('user',[
+//                                'key'=>'user',
+//                                "text" => "User Manager",
+//                                "route" => "super.user",
+//                                "icon" => "fa fa-file"
+//                            ]);
+                            $event->menu->add([
                                 "text" => "Role Manager",
-                                "url" => "super/role",
+                                "route" => "super.role",
                                 "icon" => "fa fa-file"
                             ]);
-                            $e->menu->add(['header' => 'Role and User']);
-                            $e->menu->add([
+                            $event->menu->add(['header' => 'Role and User']);
+                            $event->menu->add([
                                 "text" => "User by Role",
-                                "url" => "super/role-user",
+                                "route" => "super.role-user",
                                 "icon" => "fa fa-file"
                             ]);
                         });
@@ -67,11 +74,11 @@ class Gateway
                 }
 
                 //logout menu
-                Event::listen("JeroenNoten\LaravelAdminLte\Events\BuildingMenu",function ($e){
-                    $e->menu->add(['header' => 'Authentication']);
-                    $e->menu->add([
+                Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                    $event->menu->add(['header' => 'Authentication']);
+                    $event->menu->add([
                         "text"=>"Logout",
-                        "url"=>"logout",
+                        "route" => "logout",
                         "icon"=>"fa fa-sign-out-alt"
                     ]);
                 });

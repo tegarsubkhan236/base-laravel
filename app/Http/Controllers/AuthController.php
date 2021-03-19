@@ -43,7 +43,7 @@ class AuthController extends Controller
         if (! Auth::attempt($credentials)){
             return redirect()->route('/');
         }
-        return redirect()->route('dashboard.index');
+        return redirect()->route('dashboard');
     }
 
     public function logout()

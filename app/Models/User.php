@@ -6,11 +6,13 @@
 
 namespace App\Models;
 
+use App\Casts\UserLevel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as Authenticate;
 use Illuminate\Auth\Authenticatable as AuthenticateTrait;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class User
@@ -54,4 +56,19 @@ class User extends Model implements Authenticate
 	{
 		return $this->belongsToMany(Role::class);
 	}
+
+    public function adminlte_image()
+    {
+        return Auth::user()->avatar?'avatar':'https://picsum.photos/300/300';
+    }
+
+    public function adminlte_desc()
+    {
+        return UserLevel::class;
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'profile/'.Auth::id();
+    }
 }

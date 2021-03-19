@@ -13,9 +13,9 @@ Route::get('/login', [AuthController::class, 'login_page'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'register_page'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::prefix('super')->name('super.')->group(function (){
     Route::get('user', [UserController::class, 'user'])->name('user');
