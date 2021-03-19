@@ -69,6 +69,6 @@ class User extends Model implements Authenticate
 
     public function adminlte_profile_url()
     {
-        return 'profile/'.Auth::id();
+        return route('profile',['user_id'=>Auth::id()]);
     }
 }

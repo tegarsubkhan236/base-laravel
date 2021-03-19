@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Casts\UserLevel;
+use App\Models\Role;
+use App\Models\RoleUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,16 +18,19 @@ class UserController extends Controller
 
     public function user()
     {
-        return view('dashboard');
+        $data = User::all();
+        return view("super.user_index",compact('data'));
     }
 
     public function role()
     {
-        return view('dashboard');
+        $data = Role::all();
+        return view('super.role_index',compact('data'));
     }
 
     public function role_user()
     {
-        return view('dashboard');
+        $data = RoleUser::with('user','role')->get();
+        return view('super.userRole_index',compact('data'));
     }
 }

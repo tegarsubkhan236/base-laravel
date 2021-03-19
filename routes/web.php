@@ -9,12 +9,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('/');
 
-Route::get('/login', [AuthController::class, 'login_page'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/register', [AuthController::class, 'register_page'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('login', [AuthController::class, 'login_page'])->name('login');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::get('register', [AuthController::class, 'register_page'])->name('register');
+Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::any('logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/profile/{user_id}', [DashboardController::class, 'profile'])->name('profile');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::prefix('super')->name('super.')->group(function (){

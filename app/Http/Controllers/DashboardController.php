@@ -14,12 +14,24 @@ class DashboardController extends Controller
                 UserLevel::ADMIN,
                 UserLevel::USER,
             ]
-        ))->only('index');
+        ))->only('index','profile');
     }
 
     public function index()
     {
         $title = "Dashboard";
         return view('dashboard',compact('title'));
+    }
+
+    public function profile($user_id)
+    {
+        $data = '';
+        if (UserLevel::ADMIN){
+            $data = '';
+        }
+        if (UserLevel::USER){
+            $data = '';
+        }
+        return view('profile',compact('data'));
     }
 }

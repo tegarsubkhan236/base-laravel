@@ -39,10 +39,10 @@ class Gateway
                 switch ($userRole) {
                     case UserLevel::SUPER_ADMIN:
                         Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
-                            $event->menu->add(['header' => 'Master Data']);
+                            $event->menu->add(['header' => 'MASTER DATA']);
                             $event->menu->add([
                                 'key'=>'user',
-                                "text" => "User Manager",
+                                "text" => "User",
                                 "route" => "super.user",
                                 "icon" => "fa fa-file"
                             ]);
@@ -53,11 +53,11 @@ class Gateway
 //                                "icon" => "fa fa-file"
 //                            ]);
                             $event->menu->add([
-                                "text" => "Role Manager",
+                                "text" => "Role",
                                 "route" => "super.role",
                                 "icon" => "fa fa-file"
                             ]);
-                            $event->menu->add(['header' => 'Role and User']);
+                            $event->menu->add(['header' => 'ROLE AND USER']);
                             $event->menu->add([
                                 "text" => "User by Role",
                                 "route" => "super.role-user",
@@ -77,8 +77,14 @@ class Gateway
                 Event::listen(BuildingMenu::class,function (BuildingMenu $event){
                     $event->menu->add(['header' => 'Authentication']);
                     $event->menu->add([
+                        "text"=>"Profile",
+                        "route" => ["profile",['user_id' => Auth::id()]],
+                        "icon"=>"fa fa-user-alt"
+                    ]);
+                    $event->menu->add([
+                        "url" => "logout",
+                        'method' => "POST",
                         "text"=>"Logout",
-                        "route" => "logout",
                         "icon"=>"fa fa-sign-out-alt"
                     ]);
                 });

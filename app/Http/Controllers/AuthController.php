@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\UserLevel;
 use App\Casts\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,12 +16,12 @@ class AuthController extends Controller
 
     public function login_page()
     {
-        return view('login');
+        return view('auth.login');
     }
 
     public function register_page()
     {
-        return view('register');
+        return view('auth.register');
     }
 
     public function register()
