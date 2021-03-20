@@ -15,7 +15,7 @@ return [
     */
 
     'title' => 'Base',
-    'title_prefix' => '',
+    'title_prefix' => 'BaseProjects',
     'title_postfix' => '',
 
     /*
@@ -68,7 +68,7 @@ return [
     'usermenu_header' => true,
     'usermenu_header_class' => 'bg-olive',
     'usermenu_image' => true,
-    'usermenu_desc' => false,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => true,
 
     /*
@@ -270,7 +270,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
