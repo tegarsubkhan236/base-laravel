@@ -30,21 +30,24 @@ class Gateway
                 //dashboard menu
                 Event::listen(BuildingMenu::class,function (BuildingMenu $event){
                     $event->menu->add([
+                        'header' => 'Master Data',]);
+                    $event->menu->add([
                         "text"=>"Dashboard",
                         "route"=>"dashboard",
-                        "icon"=>"fa fa-file",
+                        "shift" => "ml-2",
+                        "icon"=>"fa fa-home",
                     ]);
                 });
 
                 switch ($userRole) {
                     case UserLevel::SUPER_ADMIN:
                         Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
-                            $event->menu->add(['header' => 'MASTER DATA']);
                             $event->menu->add([
                                 'key'=>'user',
                                 "text" => "User",
                                 "route" => "super.user",
-                                "icon" => "fa fa-file"
+                                "shift" => "ml-2",
+                                "icon" => "fa fa-users"
                             ]);
 //                            $event->menu->addIn('user',[
 //                                'key'=>'user',
@@ -55,13 +58,15 @@ class Gateway
                             $event->menu->add([
                                 "text" => "Role",
                                 "route" => "super.role",
-                                "icon" => "fa fa-file"
+                                "shift" => "ml-2",
+                                "icon" => "fa fa-key"
                             ]);
-                            $event->menu->add(['header' => 'ROLE AND USER']);
+//                            $event->menu->add(['header' => 'ROLE AND USER']);
                             $event->menu->add([
                                 "text" => "User by Role",
                                 "route" => "super.role-user",
-                                "icon" => "fa fa-file"
+                                "shift" => "ml-2",
+                                "icon" => "fa fa-database"
                             ]);
                         });
                         break;
@@ -75,16 +80,20 @@ class Gateway
 
                 //logout menu
                 Event::listen(BuildingMenu::class,function (BuildingMenu $event){
-                    $event->menu->add(['header' => 'Authentication']);
+                    $event->menu->add([
+                        'header' => 'Authentication',
+                    ]);
                     $event->menu->add([
                         "text"=>"Profile",
                         "route" => ["profile",['user_id' => Auth::id()]],
+                        "shift" => "ml-2",
                         "icon"=>"fa fa-user-alt"
                     ]);
                     $event->menu->add([
                         "url" => "logout",
                         'method' => "POST",
                         "text"=>"Logout",
+                        "shift" => "ml-2",
                         "icon"=>"fa fa-sign-out-alt"
                     ]);
                 });

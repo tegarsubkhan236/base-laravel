@@ -66,7 +66,8 @@ class User extends Model implements Authenticate
 
     public function adminlte_desc()
     {
-        return UserLevel::class;
+        $id = RoleUser::with('user')->where('user_id',Auth::id())->first();
+        return UserLevel::lang($id->role_id);
     }
 
     public function adminlte_profile_url()

@@ -4,11 +4,21 @@
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @stop
 
-@section('auth_header', __('adminlte::adminlte.login_message'))
-
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
 @php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
 @php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
+
+@if (config('adminlte.use_route_url', false))
+    @php( $login_url = $login_url ? route($login_url) : '' )
+    @php( $register_url = $register_url ? route($register_url) : '' )
+    @php( $password_reset_url = $password_reset_url ? route($password_reset_url) : '' )
+@else
+    @php( $login_url = $login_url ? url($login_url) : '' )
+    @php( $register_url = $register_url ? url($register_url) : '' )
+    @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
+@endif
+
+@section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
@@ -16,16 +26,16 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-                   value="{{ old('username') }}" placeholder="Username" autofocus>
+            <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
-            @if($errors->has('username'))
+            @if($errors->has('email'))
                 <div class="invalid-feedback">
-                    <strong>{{ $errors->first('username') }}</strong>
+                    <strong>{{ $errors->first('email') }}</strong>
                 </div>
             @endif
         </div>
@@ -84,12 +94,3 @@
         </p>
     @endif
 @stop
-
-@push("js")
-    @include("msg")
-    <script>
-        $(document).ready(function () {
-
-        })
-    </script>
-@endpush

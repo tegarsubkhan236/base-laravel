@@ -20,6 +20,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::prefix('super')->name('super.')->group(function (){
     Route::get('user', [UserController::class, 'user'])->name('user');
+    Route::get('user/toggle-status', [UserController::class, 'user_toggleStatus'])->name('user.toggleStatus');
     Route::get('role', [UserController::class, 'role'])->name('role');
     Route::get('role-user', [UserController::class, 'role_user'])->name('role-user');
 });

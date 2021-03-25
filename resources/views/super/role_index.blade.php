@@ -3,7 +3,6 @@
 @section('title', ((isset($title))?$title:""))
 
 @section('content_header')
-
 @stop
 
 @section('content')
@@ -11,24 +10,56 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Dashboard</div>
+                    <h3 class="text-center bg-olive">{{$title}}</h3>
                 </div>
                 <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-hover table-border text-center" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th style="width: 50px;">No</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($data as $i => $item)
+                                <tr>
+                                    <td style="width: 50px">{{$i+1}}</td>
+                                    <td>{{$item->name}}</td>
+                                    <td>
+                                        <i class="fa fa-pen"></i>
+                                        <i class="fa fa-trash"></i>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @stop
 
-@section('css')
-
+@section('footer')
+    <div class="text-right">
+        <strong>Copyright &copy; 2021 <a href="/">Base Project</a>.</strong> All rights reserved.
+    </div>
 @stop
 
-@section("js")
+@push('css')
+@endpush
+
+@push("js")
     @include("msg")
     <script>
         $(document).ready(function () {
-
-        })
+            const table = $('#example').DataTable({
+                "pageLength": 10,
+                "bLengthChange": false,
+                // "dom":'<"top">ct<"top"p><"clear">',
+            });
+        });
     </script>
-@stop
+@endpush

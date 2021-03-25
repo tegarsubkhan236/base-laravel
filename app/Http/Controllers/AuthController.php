@@ -42,9 +42,9 @@ class AuthController extends Controller
           "status" => UserStatus::ACTIVE,
         ];
         if (! Auth::attempt($credentials)){
-            return redirect()->route('/');
+            return back()->withErrors(['msg'=>"Username / Password not valid"]);
         }
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with(['msg'=>"Welcome ". $data['username']]);
     }
 
     public function logout()

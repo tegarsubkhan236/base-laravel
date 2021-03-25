@@ -2182,11 +2182,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 			matched = match.shift();
 			tokens.push({
 				value: matched,
-<<<<<<< HEAD
-				// Casts descendant combinators to space
-=======
 				// Cast descendant combinators to space
->>>>>>> 959db569c6f0faf87421e6258b12cd3624dc0e1b
 				type: match[0].replace( rtrim, " " )
 			});
 			soFar = soFar.slice( matched.length );
