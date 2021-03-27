@@ -15,12 +15,12 @@
     <div class="sidebar" style="height: auto">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://simita-is.unikom.ac.id/img.php?src=https://simita-is.unikom.ac.id/uploads/foto/peserta/10516236_w8SB8.jpg&amp;w=100&amp;h=100"
+                <img src="{{Auth::user()->avatar ? Auth::user()->avatar:"https://simita-is.unikom.ac.id/img.php?src=https://simita-is.unikom.ac.id/uploads/foto/peserta/10516236_w8SB8.jpg&amp;w=100&amp;h=100"}}"
                      class="img-circle elevation-2"
                      alt="User Image">
             </div>
             <div class="info">
-                <p class="text-white d-block">Alexander Pierce</p>
+                <p class="text-white d-block">{{Auth::user()->username}}</p>
             </div>
         </div>
         <nav class="mt-2">

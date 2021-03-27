@@ -79,25 +79,25 @@
     <script>
         $(document).ready(function () {
             // toggleStatus
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            })
             $('.toggle-class').change(function() {
                 let status = $(this).prop('checked') === true ? 1 : 0;
                 let user_id = $(this).data('id');
-
                 $.ajax({
                     type: "GET",
                     dataType: "json",
                     url: '/super/user/toggle-status',
                     data: {'status': status, 'user_id': user_id},
+
                     success: function(data){
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            timerProgressBar: true,
-                        })
                         Toast.fire({
-                            icon: 'success',
+                            icon: user_id == 1 ? "error":"success",
                             title: data.success
                         })
                     }

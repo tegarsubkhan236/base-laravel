@@ -20,16 +20,16 @@ class UserController extends Controller
     public function user()
     {
         $title = 'User';
-        $data = User::all();
+        $data = User::paginate(10);
         $data->filter(function ($v){
            $v->status_text = UserStatus::lang($v->status);
         });
         return view("super.user_index",compact('data','title'));
     }
 
-    public function user_toggleStatus(Request $request): \Illuminate\Http\JsonResponse
+    public function user_toggleStatus(Request $request)
     {
-        if ($request->user_id = 1){
+        if ($request->user_id == 1){
             return response()->json(['success'=>"Super admin always active"]);
         }
         $user = User::find($request->user_id);
@@ -41,7 +41,7 @@ class UserController extends Controller
     public function role()
     {
         $title = "Role";
-        $data = Role::all();
+        $data = Role::paginate(10);
         return view('super.role_index',compact('data','title'));
     }
 

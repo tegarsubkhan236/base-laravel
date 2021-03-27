@@ -50,6 +50,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('/');
+        return redirect()->route('/')->with(['msg'=>"Good Bye !!!"]);
     }
 }

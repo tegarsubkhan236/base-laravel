@@ -21,6 +21,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::prefix('super')->name('super.')->group(function (){
     Route::get('user', [UserController::class, 'user'])->name('user');
     Route::get('user/toggle-status', [UserController::class, 'user_toggleStatus'])->name('user.toggleStatus');
+    Route::get('user/update', [UserController::class, 'user_update'])->name('user.update');
     Route::get('role', [UserController::class, 'role'])->name('role');
+    Route::get('role/update', [UserController::class, 'role_update'])->name('role.update');
     Route::get('role-user', [UserController::class, 'role_user'])->name('role-user');
+    Route::get('role-user/store', [UserController::class, 'role_user_store'])->name('role-user.store');
 });
