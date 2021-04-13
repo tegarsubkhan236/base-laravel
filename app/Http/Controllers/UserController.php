@@ -13,14 +13,13 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware($this->allowedAccess([UserLevel::SUPER_ADMIN]))
-            ->only('user','user_toggleStatus','role','role_user');
+        $this->middleware($this->allowedAccess([UserLevel::SUPER_ADMIN]));
     }
 
     public function user()
     {
         $title = 'User';
-        $data = User::paginate(10);
+        $data = User::with('roles')->paginate(10);
         $data->filter(function ($v){
            $v->status_text = UserStatus::lang($v->status);
         });
@@ -38,6 +37,12 @@ class UserController extends Controller
         return response()->json(['success'=>'User status change successfully.']);
     }
 
+    public function user_destroy(Request $request)
+    {
+        User::find($request->id)->delete();
+        return redirect()->back()->with('success','User deleted successfully');
+    }
+
     public function role()
     {
         $title = "Role";
@@ -45,10 +50,30 @@ class UserController extends Controller
         return view('super.role_index',compact('data','title'));
     }
 
-    public function role_user()
+    public function role_store(Request $request)
     {
-        $title = "Role and User";
-        $data = RoleUser::with('user','role')->get();
-        return view('super.userRole_index',compact('data','title'));
+        $request->validate([
+           "name" => "required",
+        ]);
+        $data = $request->all();
+        $store = Role::create($data);
+        if ($store){
+            return redirect()->back()->with(['msg'=>'Data berhasil di simpan']);
+        }
+        return redirect()->back()->withErrors(['msg'=>'Data gagal di simpan']);
+    }
+
+    public function role_update(Request $request, $role_id)
+    {
+        $request->validate([
+           "name" => "required",
+        ]);
+        $data = $request->all();
+        unset($data['token']);
+        $update = Role::where('id',$role_id)->update($data);
+        if ($update){
+            return redirect()->back()->with(['msg'=>'Data berhasil di update']);
+        }
+        return redirect()->back()->withErrors(['msg'=>'Data gagal di update']);
     }
 }

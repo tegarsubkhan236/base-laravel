@@ -37,13 +37,12 @@ class Gateway
             // dashboard menu
             Event::listen(BuildingMenu::class,function (BuildingMenu $event){
                 $event->menu->add([
-                    'header' => 'Master Data',]);
-                $event->menu->add([
                     "text"=>"Dashboard",
                     "route"=>"dashboard",
                     "shift" => "ml-2",
                     "icon"=>"fa fa-home",
                 ]);
+                $event->menu->add(['header' => 'Master Data',]);
             });
 
             // Main menu
@@ -51,24 +50,18 @@ class Gateway
                 case UserLevel::SUPER_ADMIN:
                     Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                         $event->menu->add([
-                            'key'=>'user',
-                            "text" => "User",
-                            "route" => "super.user",
-                            "shift" => "ml-2",
-                            "icon" => "fa fa-users"
-                        ]);
-                        $event->menu->add([
                             "text" => "Role",
-                            "route" => "super.role",
+                            "route" => "super.role.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
-                        $event->menu->add(['header' => 'ROLE AND USER']);
+                        $event->menu->add(['header' => 'USER MANAGEMENT']);
                         $event->menu->add([
-                            "text" => "User by Role",
-                            "route" => "super.role-user",
+                            'key'=>'user',
+                            "text" => "User",
+                            "route" => "super.user.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-database"
+                            "icon" => "fa fa-users"
                         ]);
                     });
                     break;
@@ -93,7 +86,7 @@ class Gateway
                 ]);
                 $event->menu->add([
                     "url" => "logout",
-                    'method' => "POST",
+                    'method' => "GET",
                     "text"=>"Logout",
                     "shift" => "ml-2",
                     "icon"=>"fa fa-sign-out-alt",

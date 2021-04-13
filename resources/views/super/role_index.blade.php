@@ -10,14 +10,23 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center bg-olive">{{$title}}</h3>
+                    <div class="row">
+                        <div class="col-10">
+                            <h3 class="text-center bg-olive mt-2">{{$title}}</h3>
+                        </div>
+                        <div class="col-2 text-right">
+                            <button data-toggle="modal" data-target="#add" class="btn btn-lg  btn-outline-success">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example" class="table table-hover table-border text-center" style="width: 100%">
                             <thead>
                             <tr>
-                                <th style="width: 50px;">No</th>
+                                <th style="width: 50px;">ID</th>
                                 <th>Name</th>
                                 <th>Action</th>
                             </tr>
@@ -25,11 +34,18 @@
                             <tbody>
                             @foreach($data as $i => $item)
                                 <tr>
-                                    <td style="width: 50px">{{$i+1}}</td>
+                                    <td style="width: 50px">{{$item->id}}</td>
                                     <td>{{$item->name}}</td>
                                     <td>
-                                        <i class="fa fa-pen"></i>
-                                        <i class="fa fa-trash"></i>
+                                        <div class="btn-group" role="group">
+                                            <button
+                                                data-toggle="modal"
+                                                data-target="#edit"
+                                                type="button"
+                                                class="btn btn-tool btn-outline-info">
+                                                <i class="fa fa-pen"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -37,6 +53,24 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add -->
+    <div class="modal fade" id="add" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                @include('super.role_form');
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit -->
+    <div class="modal fade" id="edit" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                @include('super.role_form');
             </div>
         </div>
     </div>
@@ -58,7 +92,7 @@
             const table = $('#example').DataTable({
                 "pageLength": 10,
                 "bLengthChange": false,
-                // "dom":'<"top">ct<"top"p><"clear">',
+                "dom":'<"top">ct<"top"p><"clear">',
             });
         });
     </script>
