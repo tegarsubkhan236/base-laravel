@@ -3,9 +3,9 @@
 
     class UserLevel
     {
-        const SUPER_ADMIN = 1;
-        const ADMIN = 2;
-        const USER = 3;
+        public const SUPER_ADMIN = 1;
+        public const ADMIN = 2;
+        public const USER = 3;
 
         public static function lang($v): string
         {

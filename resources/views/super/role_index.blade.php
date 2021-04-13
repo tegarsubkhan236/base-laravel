@@ -2,8 +2,7 @@
 
 @section('title', ((isset($title))?$title:""))
 
-@section('content_header')
-@stop
+@section('content_header')@stop
 
 @section('content')
     <div class="row">
@@ -39,10 +38,10 @@
                                     <td>
                                         <div class="btn-group" role="group">
                                             <button
-                                                data-toggle="modal"
-                                                data-target="#edit"
-                                                type="button"
-                                                class="btn btn-tool btn-outline-info">
+                                                    data-id="{{$item->id}}"
+                                                    data-namE="{{$item->name}}"
+                                                    type="button"
+                                                    class="edit btn btn-tool btn-outline-info">
                                                 <i class="fa fa-pen"></i>
                                             </button>
                                         </div>
@@ -93,6 +92,15 @@
                 "pageLength": 10,
                 "bLengthChange": false,
                 "dom":'<"top">ct<"top"p><"clear">',
+            });
+            $("#example .edit").on("click",function(){
+                let params = $(this)
+                let role_id = params.data("id")
+                let name = params.data("name")
+                $("#edit").modal();
+                $("#edit").find(".modal-body input[name=name]").val(name);
+                $("#edit").find(".modal-body form").attr("action","{{route("super.role.update")}}/"+role_id);
+                $("#edit").find(".modal-title").text("Edit Role");
             });
         });
     </script>

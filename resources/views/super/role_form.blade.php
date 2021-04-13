@@ -1,28 +1,25 @@
 <div class="modal-header">
-    <h5 class="modal-title">{{$i ? "Edit" : "Tambah"}} {{$title}}</h5>
+    <h5 class="modal-title">Add {{$title}}</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<form action="#" method="#">
-    <div class="modal-body">
+<div class="modal-body">
+    <form action="{{route('super.role.store')}}" method="POST">
+        @csrf
         <div class="form-row">
-            <div class="col-md-6 form-group">
+            <div class="col-md-12 form-group">
                 <label for="name">
-                    Nama Role
-                    <input class="form-control" type="text"/>
+                    Role Name
                 </label>
-            </div>
-            <div class="col-md-6 form-group">
-                <label for="name">
-                    Nama Role
-                    <input class="form-control" type="text"/>
-                </label>
+                <input id="name" name='name' value="{{@$data['name']}}" class="form-control" type="text"/>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-    </div>
-</form>
+        <div class="form-row">
+            <div class="col-md-5 offset-7 pt-3 form-group">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </form>
+</div>

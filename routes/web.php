@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('login');
 })->name('/');
 
 Route::get('login', [AuthController::class, 'login_page'])->name('login');
@@ -24,13 +24,14 @@ Route::prefix('super')->name('super.')->group(function (){
     Route::prefix('/user')->name('user.')->group(function (){
         Route::get('/', [UserController::class, 'user'])->name('index');
         Route::get('/toggle-status', [UserController::class, 'user_toggleStatus'])->name('toggleStatus');
-        Route::put('/update/{user_id}', [UserController::class, 'user_update'])->name('update');
+        Route::post('/store', [UserController::class, 'user_store'])->name('store');
+        Route::post('/update/{user_id}', [UserController::class, 'user_update'])->name('update');
         Route::get('/destroy', [UserController::class, 'user_destroy'])->name('destroy');
     });
     // Role
     Route::prefix('/role')->name('role.')->group(function (){
         Route::get('/', [UserController::class, 'role'])->name('index');
         Route::post('/store', [UserController::class, 'role_store'])->name('store');
-        Route::put('/update/{role_id}', [UserController::class, 'role_update'])->name('update');
+        Route::post('/update/{role_id?}', [UserController::class, 'role_update'])->name('update');
     });
 });

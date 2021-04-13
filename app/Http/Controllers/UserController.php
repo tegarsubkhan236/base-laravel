@@ -20,10 +20,37 @@ class UserController extends Controller
     {
         $title = 'User';
         $data = User::with('roles')->paginate(10);
+        $listRole = Role::all();
         $data->filter(function ($v){
            $v->status_text = UserStatus::lang($v->status);
         });
-        return view("super.user_index",compact('data','title'));
+        return view("super.user_index",compact('data','listRole','title'));
+    }
+
+    public function user_store(Request $request)
+    {
+        $request->validate([
+            "name" => "required",
+            "username" => "required",
+            "password" => "required",
+            "role_id" => "required",
+        ]);
+        $data = $request->all();
+        $data['status'] = 1;
+        unset($data['_token']);
+        $role = $data['role_id'];
+        $userStore = User::create($data);
+        if ($userStore){
+            $userRole = RoleUser::create([
+                'role_id' => $role,
+                'user_id' => $userStore->id,
+            ]);
+            if ($userRole){
+                return redirect()->back()->with(['msg'=>'Data has been stored']);
+            }
+            return redirect()->back()->with(['msg'=>'Data has been stored']);
+        }
+        return redirect()->back()->withErrors(['msg'=>'Data failed to store']);
     }
 
     public function user_toggleStatus(Request $request)
@@ -56,6 +83,7 @@ class UserController extends Controller
            "name" => "required",
         ]);
         $data = $request->all();
+        unset($data['_token']);
         $store = Role::create($data);
         if ($store){
             return redirect()->back()->with(['msg'=>'Data berhasil di simpan']);
@@ -69,7 +97,7 @@ class UserController extends Controller
            "name" => "required",
         ]);
         $data = $request->all();
-        unset($data['token']);
+        unset($data['_token']);
         $update = Role::where('id',$role_id)->update($data);
         if ($update){
             return redirect()->back()->with(['msg'=>'Data berhasil di update']);
