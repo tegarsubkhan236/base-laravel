@@ -10,10 +10,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-11">
                             <h3 class="text-center bg-olive mt-2">{{$title}}</h3>
                         </div>
-                        <div class="col-2 text-right">
+                        <div class="col-1 text-right">
                             <button data-toggle="modal" data-target="#add" class="btn btn-lg  btn-outline-success">
                                 <i class="fa fa-plus-circle"></i>
                             </button>

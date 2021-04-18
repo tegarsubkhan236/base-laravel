@@ -20,7 +20,7 @@
                 <label for="username">
                     Username
                 </label>
-                <input id="username" name='username' value="{{$data['username']}}" class="form-control" type="text"/>
+                <input id="username" name='username' value="{{@$data['username']}}" class="form-control" type="text"/>
             </div>
             <div class="col-md-6 form-group">
                 <label for="password">
@@ -36,7 +36,7 @@
                 </label>
                 <select id="role" name="role_id" class="form-control">
                     @foreach($listRole as $role)
-                        <option value="{{$role->id}}">{{$role->name}}</option>
+                        <option value="{{@$role->id}}">{{@$role->name}}</option>
                     @endforeach
                 </select>
             </div>

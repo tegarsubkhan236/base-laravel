@@ -21,19 +21,14 @@ class Gateway
      */
     public function handle(Request $request, Closure $next, $is_must = null)
     {
-        $roleId = Auth::user()->roles()->pluck('id');
-        $roleId = $roleId[0];
+        $roleId = Auth::user()->roles()->pluck('id')[0];
         $check = explode("|",$is_must);
 
         if ($roleId === NULL || $is_must === NULL){
-            return redirect()->route('/')->withErrors('You have no access in this page');
+            return back()->withErrors('You have no access in this page');
         }
 
-        if ($roleId != $is_must){
-            return redirect()->route('/')->withErrors('You have no access in this page');
-        }
-
-        if (in_array($roleId,$check)){
+        if (in_array($roleId, $check)){
             // dashboard menu
             Event::listen(BuildingMenu::class,function (BuildingMenu $event){
                 $event->menu->add([
@@ -66,14 +61,18 @@ class Gateway
                     });
                     break;
                 case UserLevel::ADMIN:
-                    echo "hallo word";
+                    Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                        $event->menu->add(['header' => 'Master Data',]);
+                    });
                     break;
                 case UserLevel::USER:
-                    echo "hallo world";
+                    Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                        $event->menu->add(['header' => 'Master Data',]);
+                    });
                     break;
             }
 
-            // logout menu
+            // Authentication
             Event::listen(BuildingMenu::class,function (BuildingMenu $event){
                 $event->menu->add([
                     'header' => 'Authentication',
@@ -95,7 +94,8 @@ class Gateway
                     ]
                 ]);
             });
+            return $next($request);
         }
-        return $next($request);
-    }
+
+        return back()->withErrors('You have no access');}
 }

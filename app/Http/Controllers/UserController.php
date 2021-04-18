@@ -36,6 +36,7 @@ class UserController extends Controller
             "role_id" => "required",
         ]);
         $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
         $data['status'] = 1;
         unset($data['_token']);
         $role = $data['role_id'];
@@ -51,6 +52,31 @@ class UserController extends Controller
             return redirect()->back()->with(['msg'=>'Data has been stored']);
         }
         return redirect()->back()->withErrors(['msg'=>'Data failed to store']);
+    }
+
+    public function user_update(Request $request, $user_id)
+    {
+        $request->validate([
+            "name" => "required",
+            "username" => "required",
+            "role_id" => "required",
+        ]);
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $role = $data['role_id'];
+        unset($data['_token'],$data['role_id']);
+        $userStore = User::where('id', $user_id)->update($data);
+        if ($userStore){
+            $userRole = RoleUser::where('user_id', $user_id)->update([
+                'role_id' => $role,
+                'user_id' => $user_id,
+            ]);
+            if ($userRole){
+                return redirect()->back()->with(['msg'=>'Data has been updated']);
+            }
+            return redirect()->back()->with(['msg'=>'Data has been updated']);
+        }
+        return redirect()->back()->withErrors(['msg'=>'Data failed to updated']);
     }
 
     public function user_toggleStatus(Request $request)

@@ -60,9 +60,7 @@ class User extends Model implements Authenticate
 
     public function adminlte_image()
     {
-        return Auth::user()->avatar
-            ? Auth::user()->avatar
-            :'https://via.placeholder.com/50';
+        return Auth::user()->avatar ?: 'https://via.placeholder.com/50';
     }
 
     public function adminlte_desc()

@@ -3,8 +3,8 @@
 
     class UserStatus
     {
-        const ACTIVE = 1;
-        const INACTIVE = 0;
+        public const ACTIVE = 1;
+        public const INACTIVE = 0;
 
         public static function lang($status): string
         {

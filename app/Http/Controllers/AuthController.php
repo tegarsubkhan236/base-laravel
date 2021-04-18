@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Casts\UserLevel;
 use App\Casts\UserStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -14,22 +14,12 @@ class AuthController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login_page()
-    {
-        return view('auth.login');
-    }
-
-    public function register_page()
-    {
-        return view('auth.register');
-    }
-
-    public function register()
+    public function register(): void
     {
         //
     }
 
-    public function login(Request $req)
+    public function login(Request $req): RedirectResponse
     {
         $req->validate([
            "username" => "required",
@@ -39,15 +29,17 @@ class AuthController extends Controller
         $credentials = [
           "username" => $data['username'],
           "password" => $data['password'],
-          "status" => UserStatus::ACTIVE,
         ];
         if (! Auth::attempt($credentials)){
             return back()->withErrors(['msg'=>"Username / Password not valid"]);
         }
+        if (Auth::user()->status !== UserStatus::ACTIVE) {
+            return back()->withErrors(['msg' => "Account not active"]);
+        }
         return redirect()->route('dashboard')->with(['msg'=>"Welcome ". $data['username']]);
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect()->route('/')->with(['msg'=>"Good Bye !!!"]);
