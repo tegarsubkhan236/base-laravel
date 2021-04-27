@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $UserAdmin = new \App\Models\User;
+        $UserAdmin->name='Super Admin';
         $UserAdmin->username='super_admin';
         $UserAdmin->password=bcrypt('super_admin');
         $UserAdmin->status=1;
