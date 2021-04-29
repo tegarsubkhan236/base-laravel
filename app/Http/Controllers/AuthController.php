@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
+//    test
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
