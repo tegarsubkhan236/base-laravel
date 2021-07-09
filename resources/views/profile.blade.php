@@ -104,7 +104,7 @@
         FilePond.create( inputElement );
         FilePond.setOptions({
             server : {
-                url: '/upload',
+                url: '/upload_avatar',
                 headers : {
                     'X-CSRF-ToKEN' : '{{csrf_token()}}',
                 }

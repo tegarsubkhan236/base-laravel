@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'Base',
-    'title_prefix' => 'Base',
+    'title' => 'LumbungIndonesia',
+    'title_prefix' => 'LumbungIndonesia',
     'title_postfix' => '',
 
     /*
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Base</b>Project',
+    'logo' => '<b>Lumbung</b>Indonesia',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

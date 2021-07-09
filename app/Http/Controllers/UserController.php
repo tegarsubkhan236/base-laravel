@@ -21,9 +21,9 @@ class UserController extends Controller
         $title = 'User';
         $data = User::with('roles')->paginate(10);
         $listRole = Role::all();
-        $data->filter(function ($v){
-           $v->status_text = UserStatus::lang($v->status);
-        });
+        foreach ($data as $item){
+            $item->status_text = UserStatus::lang($item->status);
+        }
         return view("super.user_index",compact('data','listRole','title'));
     }
 
@@ -87,7 +87,7 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->status = $request->status;
         $user->save();
-        return response()->json(['success'=>'User status change successfully.']);
+        return response()->json(['success'=>'User status changed successfully.']);
     }
 
     public function user_destroy(Request $request)

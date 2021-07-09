@@ -5,7 +5,8 @@
     {
         public const SUPER_ADMIN = 1;
         public const ADMIN = 2;
-        public const USER = 3;
+        public const WAREHOUSE = 3;
+        public const OWNER = 4;
 
         public static function lang($v): string
         {
@@ -16,8 +17,11 @@
                 case self::ADMIN :
                     return "ADMIN";
                     break;
-                case self::USER :
-                    return "USER";
+                case self::WAREHOUSE :
+                    return "WAREHOUSE";
+                    break;
+                case self::OWNER :
+                    return "OWNER";
                     break;
                 default:
                     return "Unidentified";

@@ -22,37 +22,37 @@ class Gateway
     public function handle(Request $request, Closure $next, $is_must = null)
     {
         $roleId = Auth::user()->roles()->pluck('id')[0];
-        $check = explode("|",$is_must);
+        $check = explode("|", $is_must);
 
-        if ($roleId === NULL || $is_must === NULL){
+        if ($roleId === NULL || $is_must === NULL) {
             return back()->withErrors('You have no access in this page');
         }
 
-        if (in_array($roleId, $check)){
+        if (in_array($roleId, $check)) {
             // dashboard menu
-            Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+            Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                 $event->menu->add([
-                    "text"=>"Dashboard",
-                    "route"=>"dashboard",
+                    "text" => "Dashboard",
+                    "route" => "dashboard",
                     "shift" => "ml-2",
-                    "icon"=>"fa fa-home",
+                    "icon" => "fa fa-home",
                 ]);
-                $event->menu->add(['header' => 'Master Data',]);
             });
 
             // Main menu
             switch ($roleId) {
                 case UserLevel::SUPER_ADMIN:
                     Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+                        $event->menu->add(['header' => 'Master Data',]);
                         $event->menu->add([
                             "text" => "Role",
                             "route" => "super.role.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
-                        $event->menu->add(['header' => 'USER MANAGEMENT']);
+                        $event->menu->add(['header' => 'User Management']);
                         $event->menu->add([
-                            'key'=>'user',
+                            'key' => 'user',
                             "text" => "User",
                             "route" => "super.user.index",
                             "shift" => "ml-2",
@@ -61,35 +61,59 @@ class Gateway
                     });
                     break;
                 case UserLevel::ADMIN:
-                    Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                         $event->menu->add(['header' => 'Master Data',]);
                     });
                     break;
-                case UserLevel::USER:
-                    Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+                case UserLevel::WAREHOUSE:
+                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+                        $event->menu->add(['header' => 'Master Data',]);
+                        $event->menu->add([
+                            "text" => "Supplier",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Item Category",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Stock',]);
+                        $event->menu->add([
+                            "text" => "Stock",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                    });
+                    break;
+                case UserLevel::OWNER:
+                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                         $event->menu->add(['header' => 'Master Data',]);
                     });
                     break;
             }
 
             // Authentication
-            Event::listen(BuildingMenu::class,function (BuildingMenu $event){
+            Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                 $event->menu->add([
                     'header' => 'Authentication',
                 ]);
                 $event->menu->add([
-                    "text"=>"Profile",
-                    "route" => ["profile",['user_id' => Auth::id()]],
+                    "text" => "Profile",
+                    "route" => ["profile", ['user_id' => Auth::id()]],
                     "shift" => "ml-2",
-                    "icon"=>"fa fa-user-alt"
+                    "icon" => "fa fa-user-alt"
                 ]);
                 $event->menu->add([
                     "url" => "logout",
                     'method' => "GET",
-                    "text"=>"Logout",
+                    "text" => "Logout",
                     "shift" => "ml-2",
-                    "icon"=>"fa fa-sign-out-alt",
-                    "data"=> [
+                    "icon" => "fa fa-sign-out-alt",
+                    "data" => [
                         'id' => Auth::id()
                     ]
                 ]);
@@ -97,5 +121,6 @@ class Gateway
             return $next($request);
         }
 
-        return back()->withErrors('You have no access');}
+        return back()->withErrors('You have no access');
+    }
 }

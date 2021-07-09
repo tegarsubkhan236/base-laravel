@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class UtilityController extends Controller
 {
-    public function upload(Request $request)
+    public function upload_avatar(Request $request)
     {
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
-            $filename =  $file->getClientOriginalName();
+            $filename = $file->getClientOriginalName();
             $folder = uniqid('', false) . '-' . now()->timestamp;
-            $file->storeAs('/public/avatars/tmp'. $folder , $filename);
+            $file->storeAs('/public/avatars/' . $folder, $filename);
 
             TemporaryFile::create([
                 'folder' => $folder,

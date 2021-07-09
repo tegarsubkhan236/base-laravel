@@ -6,13 +6,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('auth.login');
 })->name('/');
-Route::get('login', function (){
+Route::get('login', function () {
     return view('auth.login');
 })->name('login');
-Route::get('register', function (){
+Route::get('register', function () {
     return view('auth.register');
 })->name('register');
 
@@ -26,9 +26,9 @@ Route::post('account/{user_id}', [DashboardController::class, 'account'])->name(
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 //Super Admin
-Route::prefix('super')->name('super.')->group(function (){
+Route::prefix('super')->name('super.')->group(function () {
     // User
-    Route::prefix('/user')->name('user.')->group(function (){
+    Route::prefix('/user')->name('user.')->group(function () {
         Route::get('/', [UserController::class, 'user'])->name('index');
         Route::get('/toggle-status', [UserController::class, 'user_toggleStatus'])->name('toggleStatus');
         Route::post('/store', [UserController::class, 'user_store'])->name('store');
@@ -36,7 +36,7 @@ Route::prefix('super')->name('super.')->group(function (){
         Route::get('/destroy', [UserController::class, 'user_destroy'])->name('destroy');
     });
     // Role
-    Route::prefix('/role')->name('role.')->group(function (){
+    Route::prefix('/role')->name('role.')->group(function () {
         Route::get('/', [UserController::class, 'role'])->name('index');
         Route::post('/store', [UserController::class, 'role_store'])->name('store');
         Route::post('/update/{role_id?}', [UserController::class, 'role_update'])->name('update');
@@ -44,4 +44,4 @@ Route::prefix('super')->name('super.')->group(function (){
 });
 
 // Utility
-Route::post('upload',[UtilityController::class, 'upload']);
+Route::post('upload_avatar', [UtilityController::class, 'upload_avatar']);
