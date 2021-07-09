@@ -28,5 +28,8 @@ class DatabaseSeeder extends Seeder
         $UserRole->user_id=1;
         $UserRole->role_id=1;
         $UserRole->save();
+        $this->call(UsersTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(RoleUserTableSeeder::class);
     }
 }
