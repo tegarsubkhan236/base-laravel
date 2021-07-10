@@ -4,80 +4,77 @@
 
 @section('content_header')@stop
 
+@php
+    use \Illuminate\Support\Facades\Auth;
+    use \App\Models\RoleUser;
+    $userRole = RoleUser::where('user_id',Auth::id())->first();
+@endphp
+
 @section('content')
     <div class="row">
-        <div class="col-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="text-center bg-olive mt-2">
-                        @if(isset($edit_item))
+        @if(isset($edit_item))
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center bg-olive mt-2">
                             Edit
-                        @else
-                            Add
-                        @endif
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <form
-                        action="{{isset($edit_item) ? route('stock.master.update',[$edit_item->id]) : route('stock.master.store')}}"
-                        method="POST">
-                        @csrf
-{{--                        <div class="form-row">--}}
-{{--                            <div class="col-md-12 form-group">--}}
-{{--                                <label for="name">--}}
-{{--                                    Name--}}
-{{--                                </label>--}}
-{{--                                <input id="name" name='name' value="{{@$edit_item['name']}}" class="form-control"--}}
-{{--                                       type="text"/>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-row">--}}
-{{--                            <div class="col-md-12 form-group">--}}
-{{--                                <label for="category">--}}
-{{--                                    Category--}}
-{{--                                </label>--}}
-{{--                                <select name="category_id" id="category" class="form-control">--}}
-{{--                                    <option value="" hidden>--Select Category--</option>--}}
-{{--                                    @foreach($item as $v)--}}
-{{--                                        <option value="{{$v->id}}" {{isset($edit_item)?($v->id == $edit_item->item_category->id ? 'selected':''):''}}>{{$item->name}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        @if(!isset($edit_item))
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('stock.master.update',[$edit_item->id]) }}" method="POST">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="name">
+                                        Item Name
+                                    </label>
+                                    <input id="name" name='name' value="{{@$edit_item->master_item->name}}" class="form-control"
+                                           type="text" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="name">
+                                        Category
+                                    </label>
+                                    <input id="name" name='name' value="{{@$edit_item->master_item->item_category->name}}" class="form-control"
+                                           type="text" disabled/>
+                                </div>
+                            </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="qty">
-                                        Initial Quantity
+                                        Quantity
                                     </label>
-                                    <input id="qty" name='qty' value="{{old('qty')}}" class="form-control"
+                                    <input id="qty" name='qty' value="{{@$edit_item->qty}}" class="form-control"
                                            type="number"/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
                                     <label for="price">
-                                        Initial Sell Price
+                                        Sell Price
                                     </label>
-                                    <input id="price" name='price' value="{{old('sell_price')}}" class="form-control"
+                                    <input id="price" name='price' value="{{@$edit_item->sell_price}}" class="form-control"
                                            type="number"/>
                                 </div>
                             </div>
-                        @endif
-                        <div class="form-row">
-                            <div class="col-md-2 offset-8 pt-3 form-group">
-                                @if(isset($edit_item))
-                                    <button type="submit" class="btn btn-warning">Update</button>
-                                @else
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                @endif
+                            <div class="form-row">
+                                <div class="col-md-2 offset-8 pt-3 form-group">
+                                    @if(isset($edit_item))
+                                        <button type="submit" class="btn btn-warning">Update</button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-9">
+        @endif
+
+        <div class="{{isset($edit_item)?'col-9':'col-12'}}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -87,7 +84,7 @@
                         @if(isset($edit_item))
                             <div class="col-1">
                                 <a href="{{route('stock.master.index')}}" class="btn btn-lg  btn-outline-success">
-                                    <i class="fa fa-plus-circle"></i>
+                                    <i class="fa fa-backward"></i>
                                 </a>
                             </div>
                         @endif
@@ -99,35 +96,42 @@
                             <thead>
                             <tr>
                                 <th class="align-middle" style="width: 50px;" rowspan="2">No</th>
-{{--                                <th>Name</th>--}}
-{{--                                <th>Category</th>--}}
-                                <th class="align-middle" rowspan="2">Action</th>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Sell Price</th>
+                                @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
+                                    <th class="align-middle" rowspan="2">Action</th>
+                                @endif
                             </tr>
                             <tr>
-{{--                                <td>Name</td>--}}
-{{--                                <td>Category</td>--}}
+                                <td>Item</td>
+                                <td>Category</td>
+                                <td>Quantity</td>
+                                <td>Sell Price</td>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($data as $i => $item)
                                 <tr>
                                     <td class="align-middle" style="width: 50px">{{$i+1}}</td>
-{{--                                    <td class="align-middle">{{$item->name}}</td>--}}
-{{--                                    <td class="align-middle"><span class="badge badge-info">{{$item->item_category->name}}</span></td>--}}
-                                    <td class="align-middle">
-                                        <div class="btn-group" role="group">
-                                            <a href="{{route('stock.master.edit',[$item->id])}}">
-                                                <button type="button" class="edit btn btn-tool btn-outline-info">
-                                                    <i class="fa fa-pen"></i>
-                                                </button>
-                                            </a>
-                                            <a href="#" class="delete" data-id="{{$item->id}}">
-                                                <button type="button" class="btn btn-tool btn-outline-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </a>
-                                        </div>
+                                    <td class="align-middle">{{$item->master_item->name}}</td>
+                                    <td class="align-middle"><span
+                                            class="badge badge-info">{{$item->master_item->item_category->name}}</span>
                                     </td>
+                                    <td class="align-middle">{{$item->qty}}</td>
+                                    <td class="align-middle">{{$item->sell_price}}</td>
+                                    @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
+                                        <td class="align-middle">
+                                            <div class="btn-group" role="group">
+                                                <a href="{{route('stock.master.edit',[$item->id])}}">
+                                                    <button type="button" class="edit btn btn-tool btn-outline-info">
+                                                        <i class="fa fa-pen"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
@@ -182,44 +186,6 @@
                         });
                     });
                 }
-            });
-        });
-        // Delete record
-        docReady(function () {
-            $(document).on('click', '.delete', function (e) {
-                e.preventDefault();
-                let id = $(this).data('id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed && id !== 1) {
-                        $.ajax({
-                            type: "GET",
-                            url: "{{url('/stock/master/destroy')}}",
-                            data: {id: id},
-                            success: function () {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: "Data has been deleted"
-                                })
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 500);
-                            }
-                        });
-                    } else {
-                        Swal.fire(
-                            'Failed',
-                            'Data failed to delete',
-                        )
-                    }
-                });
             });
         });
     </script>

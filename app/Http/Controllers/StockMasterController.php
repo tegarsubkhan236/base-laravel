@@ -16,7 +16,8 @@ class StockMasterController extends Controller
     {
         $this->middleware($this->allowedAccess([
             UserLevel::OWNER,
-            UserLevel::WAREHOUSE
+            UserLevel::WAREHOUSE,
+            UserLevel::ADMIN,
         ]));
     }
 
@@ -32,7 +33,7 @@ class StockMasterController extends Controller
         $data = MasterStock::all();
         $edit_item = MasterStock::where('id',$id)->first();
         $title = "Stock Master";
-        return view('item-master.index', compact('data','edit_item','title'));
+        return view('stock-master.index', compact('data','edit_item','title'));
     }
 
     public function update(Request $request, $id)

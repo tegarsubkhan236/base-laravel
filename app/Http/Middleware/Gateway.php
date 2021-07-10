@@ -65,7 +65,7 @@ class Gateway
                         $event->menu->add(['header' => 'Master Data',]);
                         $event->menu->add([
                             "text" => "Stock",
-                            "route" => "super.role.index",
+                            "route" => "stock.master.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
@@ -105,13 +105,13 @@ class Gateway
                             "text" => "Stock",
                             "route" => "stock.master.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add([
                             "text" => "Supplier Stock",
                             "route" => "super.role.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
@@ -143,7 +143,7 @@ class Gateway
                             "text" => "Stock",
                             "route" => "super.role.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
@@ -161,32 +161,32 @@ class Gateway
                             "text" => "Supplier",
                             "route" => "super.role.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-user"
                         ]);
                         $event->menu->add([
                             "text" => "Item Category",
-                            "route" => "super.role.index",
+                            "route" => "item.category.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-book"
                         ]);
                         $event->menu->add([
                             "text" => "Item",
-                            "route" => "super.role.index",
+                            "route" => "item.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-book"
                         ]);
                         $event->menu->add(['header' => 'Stock',]);
                         $event->menu->add([
                             "text" => "Stock",
-                            "route" => "super.role.index",
+                            "route" => "stock.master.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add([
                             "text" => "Supplier Stock",
                             "route" => "super.role.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Report',]);
                         $event->menu->add([

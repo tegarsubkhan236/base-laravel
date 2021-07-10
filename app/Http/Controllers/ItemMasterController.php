@@ -91,7 +91,7 @@ class ItemMasterController extends Controller
         if ($action){
             $check = MasterStock::where('item_id', $action->id)->first();
             if ($check->qty > 0){
-                return redirect()->back()->withErrors(['msg'=>'item still have child data']);
+                return redirect()->back()->withErrors(['msg'=>'item still have stock in stock master']);
             }
             $exec = $action->delete();
             if ($exec){
