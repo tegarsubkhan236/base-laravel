@@ -17,6 +17,7 @@ class DashboardController extends Controller
                 UserLevel::ADMIN,
                 UserLevel::WAREHOUSE,
                 UserLevel::OWNER,
+                UserLevel::SUPPLIER,
             ]
         ));
     }

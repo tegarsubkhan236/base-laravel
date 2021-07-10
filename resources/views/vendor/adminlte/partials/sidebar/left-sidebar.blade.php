@@ -12,7 +12,7 @@
 {{--        </div>--}}
 {{--    </div>--}}
     {{-- Sidebar menu --}}
-    <div class="sidebar" style="height: auto">
+    <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{Auth::user()->avatar ? Auth::user()->avatar:"https://via.placeholder.com/50"}}"

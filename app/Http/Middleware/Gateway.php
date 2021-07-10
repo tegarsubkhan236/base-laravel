@@ -25,7 +25,7 @@ class Gateway
         $check = explode("|", $is_must);
 
         if ($roleId === NULL || $is_must === NULL) {
-            return back()->withErrors('You have no access in this page');
+            return back()->withErrors('Something wrong');
         }
 
         if (in_array($roleId, $check)) {
@@ -63,9 +63,98 @@ class Gateway
                 case UserLevel::ADMIN:
                     Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                         $event->menu->add(['header' => 'Master Data',]);
+                        $event->menu->add([
+                            "text" => "Stock",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Transaction',]);
+                        $event->menu->add([
+                            "text" => "Sell Transaction",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Report',]);
+                        $event->menu->add([
+                            "text" => "Sell Report",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
                     });
                     break;
                 case UserLevel::WAREHOUSE:
+                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+                        $event->menu->add(['header' => 'Master Data',]);
+                        $event->menu->add([
+                            "text" => "Item Category",
+                            "route" => "item.category.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-book"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Item",
+                            "route" => "item.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-book"
+                        ]);
+                        $event->menu->add(['header' => 'Stock',]);
+                        $event->menu->add([
+                            "text" => "Stock",
+                            "route" => "stock.master.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Supplier Stock",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Transaction',]);
+                        $event->menu->add([
+                            "text" => "Buy Transaction",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Report']);
+                        $event->menu->add([
+                            "text" => "Buy Report",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                    });
+                    break;
+                case UserLevel::SUPPLIER:
+                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
+                        $event->menu->add(['header' => 'Master Data',]);
+                        $event->menu->add([
+                            "text" => "Item",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Stock',]);
+                        $event->menu->add([
+                            "text" => "Stock",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Transaction',]);
+                        $event->menu->add([
+                            "text" => "Sell Transaction",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                    });
+                    break;
+                case UserLevel::OWNER:
                     Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
                         $event->menu->add(['header' => 'Master Data',]);
                         $event->menu->add([
@@ -80,6 +169,12 @@ class Gateway
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
+                        $event->menu->add([
+                            "text" => "Item",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
                         $event->menu->add(['header' => 'Stock',]);
                         $event->menu->add([
                             "text" => "Stock",
@@ -87,11 +182,25 @@ class Gateway
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
-                    });
-                    break;
-                case UserLevel::OWNER:
-                    Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
-                        $event->menu->add(['header' => 'Master Data',]);
+                        $event->menu->add([
+                            "text" => "Supplier Stock",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add(['header' => 'Report',]);
+                        $event->menu->add([
+                            "text" => "Buy Report",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Sell Report",
+                            "route" => "super.role.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-key"
+                        ]);
                     });
                     break;
             }
@@ -121,6 +230,6 @@ class Gateway
             return $next($request);
         }
 
-        return back()->withErrors('You have no access');
+        return back()->withErrors('You have no access in this page');
     }
 }

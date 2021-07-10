@@ -44,34 +44,40 @@
                                 <tr>
                                     <td class="align-middle" style="width: 50px">{{$i+1}}</td>
                                     <td class="align-middle">
-                                        <img src="{{$item->avatar ?: 'https://via.placeholder.com/125'}}" class="img-circle" alt="avatar">
+                                        <img src="{{$item->avatar ?: 'https://via.placeholder.com/125'}}"
+                                             class="img-circle" alt="avatar">
                                     </td>
                                     <td class="align-middle">{{$item->name}}</td>
                                     <td class="align-middle">{{$item->username}}</td>
                                     <td class="align-middle">
                                         @forelse($item->roles as $role)
-                                            <span class="badge badge-info">{{\App\Casts\UserLevel::lang($role->id)}}</span>
+                                            <span
+                                                class="badge badge-info">{{\App\Casts\UserLevel::lang($role->id)}}</span>
                                         @empty
                                             <span class="badge badge-danger">Null</span>
                                         @endforelse
                                     </td>
                                     <td class="align-middle">
                                         <label>
-                                            <input data-id="{{$item->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"{{ $item->status ? 'checked' : '' }} />
+                                            <input data-id="{{$item->id}}" class="toggle-class" type="checkbox"
+                                                   data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
+                                                   data-on="Active"
+                                                   data-off="InActive"{{ $item->status ? 'checked' : '' }} />
                                         </label>
                                     </td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">
                                             <button
-                                                    data-id = "{{$item->id}}"
-                                                    data-name = "{{$item->name}}"
-                                                    data-username = "{{$item->username}}"
-                                                    data-password = "{{$item->password}}"
-                                                    type="button"
-                                                    class="edit btn btn-tool btn-outline-info">
+                                                data-id="{{$item->id}}"
+                                                data-name="{{$item->name}}"
+                                                data-username="{{$item->username}}"
+                                                data-password="{{$item->password}}"
+                                                type="button"
+                                                class="edit btn btn-tool btn-outline-info">
                                                 <i class="fa fa-pen"></i>
                                             </button>
-                                            <button data-id="{{$item->id}}" type="button" class="delete btn btn-tool btn-outline-danger">
+                                            <button data-id="{{$item->id}}" type="button"
+                                                    class="delete btn btn-tool btn-outline-danger">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </div>
@@ -126,8 +132,9 @@
                 document.addEventListener("DOMContentLoaded", fn);
             }
         }
+
         // DataTable
-        docReady(function() {
+        docReady(function () {
             $('#dtable thead td').each(function () {
                 let title = $(this).text();
                 $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" />');
@@ -135,7 +142,7 @@
             $('#dtable').DataTable({
                 "pageLength": 10,
                 "bLengthChange": false,
-                "dom":'<"top">ct<"top"p><"clear">',
+                "dom": '<"top">ct<"top"p><"clear">',
                 initComplete: function () {
                     // Apply the search
                     this.api().columns().every(function () {
@@ -153,9 +160,9 @@
         });
         // Show on error
         @if (count($errors) > 0)
-            docReady(function() {
-                $('#add').modal('show');
-            });
+        docReady(function () {
+            $('#add').modal('show');
+        });
         @endif
         // toggleStatus
         docReady(function () {
@@ -166,7 +173,7 @@
                 timer: 1500,
                 timerProgressBar: true,
             })
-            $('.toggle-class').change(function() {
+            $('.toggle-class').change(function () {
                 let status = $(this).prop('checked') === true ? 1 : 0;
                 let user_id = $(this).data('id');
                 $.ajax({
@@ -175,9 +182,9 @@
                     url: '/super/user/toggle-status',
                     data: {'status': status, 'user_id': user_id},
 
-                    success: function(data){
+                    success: function (data) {
                         Toast.fire({
-                            icon: user_id === 1 ? "error":"success",
+                            icon: user_id === 1 ? "error" : "success",
                             title: data.success
                         })
                     }
@@ -186,7 +193,7 @@
         });
         // Delete record
         docReady(function () {
-            $(document).on('click', '.delete', function (e){
+            $(document).on('click', '.delete', function (e) {
                 e.preventDefault();
                 let id = $(this).data('id');
                 Swal.fire({
@@ -202,19 +209,18 @@
                         $.ajax({
                             type: "GET",
                             url: "{{url('/super/user/destroy')}}",
-                            data: {id:id},
+                            data: {id: id},
                             success: function () {
                                 Toast.fire({
                                     icon: 'success',
                                     title: "Data has been deleted"
                                 })
-                                setTimeout(function (){
+                                setTimeout(function () {
                                     window.location.reload();
-                                },500);
+                                }, 500);
                             }
                         });
-                    }
-                    else {
+                    } else {
                         Swal.fire(
                             'Failed',
                             'Data failed to delete',
@@ -225,18 +231,19 @@
         });
         // Edit Record
         docReady(function () {
-            $("#dtable .edit").on("click",function(){
+            $("#dtable .edit").on("click", function () {
                 let params = $(this)
                 let id = params.data('id');
                 let name = params.data('name');
                 let username = params.data('username');
                 let password = params.data('password');
-                $("#edit").modal();
-                $("#edit").find(".modal-body input[name=name]").val(name);
-                $("#edit").find(".modal-body input[name=username]").val(username);
-                $("#edit").find(".modal-body input[name=password]").val(password);
-                $("#edit").find(".modal-body form").attr("action","{{route("super.user.update")}}/"+id);
-                $("#edit").find(".modal-title").text("Edit Role");
+                let edit = $("#edit");
+                edit.modal();
+                edit.find(".modal-body input[name=name]").val(name);
+                edit.find(".modal-body input[name=username]").val(username);
+                edit.find(".modal-body input[name=password]").val(password);
+                edit.find(".modal-body form").attr("action", "{{route("super.user.update")}}/" + id);
+                edit.find(".modal-title").text("Edit Role");
             });
         })
     </script>

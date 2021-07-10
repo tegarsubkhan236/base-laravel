@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'LumbungIndonesia',
-    'title_prefix' => 'LumbungIndonesia',
+    'title' => 'LIS',
+    'title_prefix' => 'LIS - ',
     'title_postfix' => '',
 
     /*
