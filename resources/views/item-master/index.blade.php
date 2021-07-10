@@ -39,7 +39,8 @@
                                 <select name="category_id" id="category" class="form-control">
                                     <option value="" hidden>--Select Category--</option>
                                     @foreach($category as $item)
-                                        <option value="{{$item->id}}" {{isset($edit_item)?($item->id == $edit_item->item_category->id ? 'selected':''):''}}>{{$item->name}}</option>
+                                        <option
+                                            value="{{$item->id}}" {{isset($edit_item)?($item->id == $edit_item->item_category->id ? 'selected':''):''}}>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -113,7 +114,8 @@
                                 <tr>
                                     <td class="align-middle" style="width: 50px">{{$i+1}}</td>
                                     <td class="align-middle">{{$item->name}}</td>
-                                    <td class="align-middle"><span class="badge badge-info">{{$item->item_category->name}}</span></td>
+                                    <td class="align-middle"><span
+                                            class="badge badge-info">{{$item->item_category->name}}</span></td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">
                                             <a href="{{route('item.edit',[$item->id])}}">
@@ -121,11 +123,14 @@
                                                     <i class="fa fa-pen"></i>
                                                 </button>
                                             </a>
-                                            <a href="#" class="delete" data-id="{{$item->id}}">
-                                                <button type="button" class="btn btn-tool btn-outline-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </a>
+                                            <form id="delete-item-form" action="{{route('item.destroy',$item->id)}}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return false" id="delete-item"
+                                                        class="btn btn-tool btn-outline-danger"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -185,42 +190,22 @@
             });
         });
         // Delete record
-        docReady(function () {
-            $(document).on('click', '.delete', function (e) {
-                e.preventDefault();
-                let id = $(this).data('id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed && id !== 1) {
-                        $.ajax({
-                            type: "GET",
-                            url: "{{url('/item/destroy')}}",
-                            data: {id: id},
-                            success: function () {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: "Data has been deleted"
-                                })
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 500);
-                            }
-                        });
-                    } else {
-                        Swal.fire(
-                            'Failed',
-                            'Data failed to delete',
-                        )
-                    }
-                });
-            });
+        $('#delete-item').on('click', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure ?',
+                text: "You won't be able to revert this !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#delete-item-form').submit();
+                }
+            })
         });
     </script>
 @endpush

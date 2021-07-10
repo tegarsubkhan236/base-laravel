@@ -85,15 +85,19 @@ class ItemMasterController extends Controller
         return redirect()->back()->withErrors(['msg'=>'Data failed to update']);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $action = MasterItem::where('id',$request->id)-first();
+        $action = MasterItem::where('id',$id)->first();
         if ($action){
             $check = MasterStock::where('item_id', $action->id)->first();
-            if ($check->qty != 0){
-
+            if ($check->qty > 0){
+                return redirect()->back()->withErrors(['msg'=>'item still have child data']);
+            }
+            $exec = $action->delete();
+            if ($exec){
+                return redirect()->back()->with(['msg'=>'data deleted successfully']);
             }
         }
-        return redirect()->back()->with('success','data deleted successfully');
+        return redirect()->back()->withErrors('error','data not found');
     }
 }

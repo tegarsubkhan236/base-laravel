@@ -58,7 +58,7 @@ Route::prefix('item')->name('item.')->group(function () {
         Route::post('/store', [ItemMasterController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [ItemMasterController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [ItemMasterController::class, 'update'])->name('update');
-        Route::get('/destroy', [ItemMasterController::class, 'destroy'])->name('destroy');
+        Route::delete('/destroy/{id}', [ItemMasterController::class, 'destroy'])->name('destroy');
     });
     // Item Category
     Route::prefix('/category')->name('category.')->group(function () {
