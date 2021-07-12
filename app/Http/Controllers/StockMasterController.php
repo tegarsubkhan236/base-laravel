@@ -23,15 +23,15 @@ class StockMasterController extends Controller
 
     public function index()
     {
-        $data = MasterStock::all();
+        $data = MasterStock::with('master_item','master_item.item_category')->get();
         $title = "Stock Master";
         return view('stock-master.index', compact('data','title'));
     }
 
     public function edit($id)
     {
-        $data = MasterStock::all();
-        $edit_item = MasterStock::where('id',$id)->first();
+        $data = MasterStock::with('master_item','master_item.item_category')->get();
+        $edit_item = MasterStock::with('master_item','master_item.item_category')->where('id',$id)->first();
         $title = "Stock Master";
         return view('stock-master.index', compact('data','edit_item','title'));
     }

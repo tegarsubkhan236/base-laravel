@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemMasterController;
+use App\Http\Controllers\SellTransactionController;
 use App\Http\Controllers\StockMasterController;
 use App\Http\Controllers\StockSupplierController;
 use App\Http\Controllers\UserController;
@@ -87,5 +88,17 @@ Route::prefix('stock')->name('stock.')->group(function () {
         Route::get('/edit/{id}', [StockSupplierController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [StockSupplierController::class, 'update'])->name('update');
         Route::get('/destroy', [StockSupplierController::class, 'destroy'])->name('destroy');
+    });
+});
+
+// Sell Transaction
+Route::prefix('sell')->name('sell.')->group(function (){
+    // Admin
+    Route::get('/', [SellTransactionController::class,'index'])->name('index');
+    Route::get('/detail_item/{id}', [SellTransactionController::class,'detail_item'])->name('detail_item');
+    Route::post('/store', [SellTransactionController::class,'store'])->name('store');
+    Route::prefix('/report')->name('report.')->group(function () {
+        Route::get('/', [SellTransactionController::class,'sell_report'])->name('index');
+        Route::post('/filter', [SellTransactionController::class,'sell_report_filter'])->name('filter');
     });
 });

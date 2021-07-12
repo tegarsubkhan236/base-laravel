@@ -18,18 +18,17 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    @if(isset($edit_item))
-                        <form action="{{route('item.category.update',[$edit_item->id])}}" method="POST">
-                    @else
-                        <form action="{{route('item.category.store')}}" method="POST">
-                    @endif
+                    <form
+                        action="{{isset($edit_item)?route('item.category.update',[$edit_item->id]):route('item.category.store')}}"
+                        method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="col-md-12 form-group">
                                 <label for="name">
                                     Name
                                 </label>
-                                <input id="name" name='name' value="{{@$edit_item['name']}}" class="form-control" type="text"/>
+                                <input id="name" name='name' value="{{@$edit_item['name']}}" class="form-control"
+                                       type="text"/>
                             </div>
                         </div>
                         <div class="form-row">

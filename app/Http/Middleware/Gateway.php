@@ -67,19 +67,19 @@ class Gateway
                             "text" => "Stock",
                             "route" => "stock.master.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
                             "text" => "Sell Transaction",
-                            "route" => "super.role.index",
+                            "route" => "sell.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-chart-line"
                         ]);
                         $event->menu->add(['header' => 'Report',]);
                         $event->menu->add([
                             "text" => "Sell Report",
-                            "route" => "super.role.index",
+                            "route" => "sell.report.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);

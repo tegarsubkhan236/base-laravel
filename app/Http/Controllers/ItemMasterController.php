@@ -22,7 +22,7 @@ class ItemMasterController extends Controller
 
     public function index()
     {
-        $data = MasterItem::all();
+        $data = MasterItem::with('item_category')->get();
         $category = ItemCategory::all();
         $title = "Item Master";
         return view('item-master.index', compact('data','category','title'));
@@ -60,8 +60,8 @@ class ItemMasterController extends Controller
 
     public function edit($id)
     {
-        $data = MasterItem::all();
-        $edit_item = MasterItem::where('id',$id)->first();
+        $data = MasterItem::with('item_category')->get();;
+        $edit_item = MasterItem::with('item_category')->where('id',$id)->first();
         $category = ItemCategory::all();
         $title = "Item Master";
         return view('item-master.index', compact('data','edit_item','category','title'));

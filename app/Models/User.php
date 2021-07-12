@@ -53,8 +53,6 @@ class User extends Model implements Authenticate
 		'avatar'
 	];
 
-    protected $with = ['roles'];
-
 	public function roles()
 	{
 		return $this->belongsToMany(Role::class);

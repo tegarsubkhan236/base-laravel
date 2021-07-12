@@ -127,9 +127,10 @@
                                                   method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button onclick="return false" id="delete-item"
-                                                        class="btn btn-tool btn-outline-danger"><i
-                                                        class="fa fa-trash"></i></button>
+                                                <button data-id="{{ $item->id }}" id="delete-item"
+                                                        class="btn btn-tool btn-outline-danger">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
                                             </form>
                                         </div>
                                     </td>
@@ -190,7 +191,7 @@
             });
         });
         // Delete record
-        $('#delete-item').on('click', function (e) {
+        $(document).on('click', '#delete-item', function (e) {
             e.preventDefault();
             let id = $(this).data('id');
             Swal.fire({
