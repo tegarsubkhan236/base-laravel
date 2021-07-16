@@ -4,6 +4,12 @@
 
 @section('content_header')@stop
 
+@php
+    use \Illuminate\Support\Facades\Auth;
+    use \App\Models\RoleUser;
+    $userRole = RoleUser::where('user_id',Auth::id())->first()->role_id;
+@endphp
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -36,7 +42,8 @@
                         </div>
                         <div class="form-row">
                             <div class="col-md-2 offset-10 pl-5 mr-1 pt-3 form-group">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>Search</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>Search
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -65,39 +72,52 @@
                         <table id="dtable" class="table table-hover table-border text-center" style="width: 100%">
                             <thead>
                             <tr>
-                                <th class="align-middle" style="width: 50px;" rowspan="2">No</th>
+                                <th class="align-middle" rowspan="2">ID</th>
+                                @if($userRole == \App\Casts\UserLevel::OWNER)
                                 <th>Created BY</th>
+                                @endif
+                                <th>Total</th>
                                 <th>Note</th>
-                                <th>Created At</th>
+                                <th class="align-middle" rowspan="2">Created At</th>
                                 <th class="align-middle" rowspan="2">Action</th>
                             </tr>
                             <tr>
+                                @if($userRole == \App\Casts\UserLevel::OWNER)
                                 <td>Created By</td>
+                                @endif
+                                <td>Total</td>
                                 <td>Note</td>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($data as $i => $item)
                                 <tr>
-{{--                                    <td class="align-middle" style="width: 50px">{{$i+1}}</td>--}}
-                                    <td class="align-middle" style="width: 50px">{{$item->id}}</td>
+                                    <td class="align-middle">
+                                        SL{{$item->created_at->format('d')}}{{$item->created_at->format('m')}}{{$item->created_at->format('Y')}}{{$item->id}}
+                                    </td>
+                                    @if($userRole == \App\Casts\UserLevel::OWNER)
                                     <td class="align-middle">{{$item->user->name}}</td>
+                                    @endif
+                                    <td class="align-middle">Rp. {{number_format($item->total)}}</td>
                                     <td class="align-middle">{{$item->note}}</td>
-                                    <td class="align-middle">{{$item->created_at}}</td>
+                                    <td class="align-middle">{{$item->created_at->format('d/m/Y')}}</td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">
-                                            <a class="btn btn-tool btn-outline-info" data-toggle="modal" data-target="#detail{{$item->id}}">
-                                                <i class="fa fa-street-view"></i>
+                                            <a class="btn btn-tool btn-outline-info" data-toggle="modal"
+                                               data-target="#detail{{$item->id}}">
+                                                <i class="fa fa-eye"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="detail{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal fade" id="detail{{$item->id}}" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Detail {{$title}}</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>

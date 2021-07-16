@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BuyTransactionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemMasterController;
 use App\Http\Controllers\SellTransactionController;
 use App\Http\Controllers\StockMasterController;
 use App\Http\Controllers\StockSupplierController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +53,15 @@ Route::prefix('super')->name('super.')->group(function () {
     });
 });
 
+// Supplier Management
+Route::prefix('supplier')->name('supplier.')->group(function (){
+    // Admin
+    Route::get('/', [SupplierController::class,'index'])->name('index');
+    Route::post('/store', [SupplierController::class,'store'])->name('store');
+    Route::get('/edit/{id}', [SupplierController::class,'edit'])->name('edit');
+    Route::post('/update/{id}', [SupplierController::class,'update'])->name('update');
+});
+
 // Item Management
 Route::prefix('item')->name('item.')->group(function () {
     // Item Master
@@ -84,6 +95,7 @@ Route::prefix('stock')->name('stock.')->group(function () {
     // Stock Supplier
     Route::prefix('/supplier')->name('supplier.')->group(function () {
         Route::get('/', [StockSupplierController::class, 'index'])->name('index');
+        Route::post('/filter', [StockSupplierController::class, 'filter'])->name('filter');
         Route::post('/store', [StockSupplierController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [StockSupplierController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [StockSupplierController::class, 'update'])->name('update');
@@ -100,5 +112,20 @@ Route::prefix('sell')->name('sell.')->group(function (){
     Route::prefix('/report')->name('report.')->group(function () {
         Route::get('/', [SellTransactionController::class,'sell_report'])->name('index');
         Route::post('/filter', [SellTransactionController::class,'sell_report_filter'])->name('filter');
+    });
+});
+
+// Buy Transaction
+Route::prefix('buy')->name('buy.')->group(function (){
+    // Admin
+    Route::get('/', [BuyTransactionController::class,'index'])->name('index');
+    Route::get('/search_supplier', [BuyTransactionController::class,'search_supplier'])->name('search_supplier');
+    Route::get('/detail_item/{id}/{supplier_id}', [BuyTransactionController::class,'detail_item'])->name('detail_item');
+    Route::post('/store', [BuyTransactionController::class,'store'])->name('store');
+    Route::prefix('/report')->name('report.')->group(function () {
+        Route::get('/', [BuyTransactionController::class,'buy_report'])->name('index');
+        Route::post('/update_status/{id}', [BuyTransactionController::class,'buy_report_update_status'])->name('update_status');
+        Route::post('/filter', [BuyTransactionController::class,'buy_report_filter'])->name('filter');
+        Route::delete('/destroy/{id}', [BuyTransactionController::class,'buy_report_destroy'])->name('destroy');
     });
 });

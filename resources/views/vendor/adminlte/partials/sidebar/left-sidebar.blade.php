@@ -6,11 +6,6 @@
     @else
         @include('adminlte::partials.common.brand-logo-xs')
     @endif
-{{--    <div class="user-panel">--}}
-{{--        <div class="image text-center">--}}
-{{--            <img src="https://simita-is.unikom.ac.id/img.php?src=https://simita-is.unikom.ac.id/uploads/foto/peserta/10516236_w8SB8.jpg&amp;w=100&amp;h=100" class="img-circle" alt="User Image">--}}
-{{--        </div>--}}
-{{--    </div>--}}
     {{-- Sidebar menu --}}
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -20,7 +15,8 @@
                      alt="User Image">
             </div>
             <div class="info">
-                <p class="text-white d-block">{{Auth::user()->username}}</p>
+                <p class="text-white d-block">{{Auth::user()->username}} || {{\App\Casts\UserLevel::lang(\App\Models\RoleUser::where('user_id',Auth::id())->first()->role_id)}}</p>
+{{--                <p class="text-white">{{\App\Casts\UserLevel::lang(\App\Models\RoleUser::where('user_id',Auth::id())->first()->role_id)}}</p>--}}
             </div>
         </div>
         <nav class="mt-2">

@@ -36,18 +36,18 @@
                                     <tbody id="add_item" class="add_item"></tbody>
                                     <tbody>
                                     <tr>
-                                        <td>
+                                        <td colspan="4">
                                             <label for="total">Total</label>
                                             <input type="number" id="total" class="form-control" value="0" readonly>
                                         </td>
-                                        <td>
-                                            <label for="total">Down Payment</label>
-                                            <input type="number" id="down_payment" class="form-control" value="0">
-                                        </td>
-                                        <td colspan="2">
-                                            <label for="total">Change Money</label>
-                                            <input type="number" id="change_money" class="form-control" value="0" readonly>
-                                        </td>
+{{--                                        <td>--}}
+{{--                                            <label for="total">Down Payment</label>--}}
+{{--                                            <input type="number" id="down_payment" class="form-control" value="0">--}}
+{{--                                        </td>--}}
+{{--                                        <td colspan="2">--}}
+{{--                                            <label for="total">Change Money</label>--}}
+{{--                                            <input type="number" id="change_money" class="form-control" value="0" readonly>--}}
+{{--                                        </td>--}}
                                     </tr>
                                     </tbody>
                                 </table>

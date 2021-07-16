@@ -17,6 +17,7 @@ class SellTransactionController extends Controller
     {
         $this->middleware($this->allowedAccess([
             UserLevel::ADMIN,
+            UserLevel::OWNER,
         ]));
     }
 
@@ -44,11 +45,15 @@ class SellTransactionController extends Controller
         unset($data['_token']);
         $countItem = count($data['item_id']);
 
-        // check if stock available
+        // check if stock available and make sure stock not in min stock after transaction
         for ($i = 0; $i < $countItem; $i++) {
-            $stock = MasterStock::where('id', $data['item_id'][$i])->first();
-            if ($stock->qty - $data['qty'][$i] < 0) {
-                return redirect()->back()->withErrors(['msg' => 'Stock not available']);
+            $stock = MasterStock::with('master_item')->where('item_id', $data['item_id'][$i])->first();
+
+            if ($stock['qty'] - $data['qty'][$i] < $stock['min_stock']){
+                return redirect()->back()->withErrors(['msg' => 'Min Stock for '.$stock['master_item']['name']]);
+            }
+            if ($stock['qty'] - $data['qty'][$i] < 0) {
+                return redirect()->back()->withErrors(['msg' => "Stock not available for ".$stock['master_item']['name']]);
             }
         }
 
@@ -59,7 +64,7 @@ class SellTransactionController extends Controller
         ]);
         if ($createParent) {
             for ($i = 0; $i < $countItem; $i++) {
-                $stock = MasterStock::where('id', $data['item_id'][$i])->first();
+                $stock = MasterStock::where('item_id', $data['item_id'][$i])->first();
                 $stock->qty = $stock->qty - $data['qty'][$i];
                 if ($stock->save()) {
                     SellTransactionDetail::create([
@@ -78,6 +83,13 @@ class SellTransactionController extends Controller
         $data = SellTransaction::with('user', 'sell_transaction_details', 'sell_transaction_details.master_stock', 'sell_transaction_details.master_stock.master_item')
             ->orderBy('id', 'DESC')
             ->get();
+        foreach ($data as $v) {
+            $total = [];
+            for ($i = 0; $i < count($v->sell_transaction_details); $i++) {
+                $total[$i] = $v->sell_transaction_details[$i]->qty * $v->sell_transaction_details[$i]->master_stock->sell_price;
+            }
+            $v->total = array_sum($total);
+        }
         $title = 'Sell Report';
         return view('sell-report.index', compact('data', 'title'));
     }
@@ -93,6 +105,13 @@ class SellTransactionController extends Controller
             ->where('created_at','>=', $req_item['start-date'])
             ->where('created_at', '<=', $req_item['end-date'])
             ->get();
+        foreach ($data as $v) {
+            $total = [];
+            for ($i = 0; $i < count($v->sell_transaction_details); $i++) {
+                $total[$i] = $v->sell_transaction_details[$i]->qty * $v->sell_transaction_details[$i]->master_stock->sell_price;
+            }
+            $v->total = array_sum($total);
+        }
         $title = 'Sell Report';
         return view('sell-report.index', compact('data', 'title', 'req_item'));
     }

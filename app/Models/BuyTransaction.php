@@ -12,15 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class BuyTransaction
- * 
+ *
  * @property int $id
  * @property int $user_id
  * @property int $supplier_id
  * @property int $status
- * @property int|null $note
+ * @property string|null $note
  * @property Carbon $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property User $user
  * @property Supplier $supplier
  * @property Collection|BuyTransactionDetail[] $buy_transaction_details
@@ -35,7 +35,6 @@ class BuyTransaction extends Model
 		'user_id' => 'int',
 		'supplier_id' => 'int',
 		'status' => 'int',
-		'note' => 'int'
 	];
 
 	protected $fillable = [

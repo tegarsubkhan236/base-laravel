@@ -60,6 +60,15 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="col-md-12 form-group">
+                                    <label for="min_stock">
+                                        Minimum Stock
+                                    </label>
+                                    <input id="min_stock" name='min_stock' value="{{@$edit_item->min_stock}}" class="form-control"
+                                           type="number"/>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="col-md-2 offset-8 pt-3 form-group">
                                     @if(isset($edit_item))
                                         <button type="submit" class="btn btn-warning">Update</button>
@@ -99,6 +108,7 @@
                                 <th>Item</th>
                                 <th>Category</th>
                                 <th>Quantity</th>
+                                <th>Min Stock</th>
                                 <th>Sell Price</th>
                                 @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
                                     <th class="align-middle" rowspan="2">Action</th>
@@ -108,6 +118,7 @@
                                 <td>Item</td>
                                 <td>Category</td>
                                 <td>Quantity</td>
+                                <td>Min Stock</td>
                                 <td>Sell Price</td>
                             </tr>
                             </thead>
@@ -119,8 +130,9 @@
                                     <td class="align-middle"><span
                                             class="badge badge-info">{{$item->master_item->item_category->name}}</span>
                                     </td>
-                                    <td class="align-middle">{{$item->qty}}</td>
-                                    <td class="align-middle">{{$item->sell_price}}</td>
+                                    <td class="align-middle">{{number_format($item->qty)}}</td>
+                                    <td class="align-middle">{{number_format($item->min_stock)}}</td>
+                                    <td class="align-middle">Rp. {{number_format($item->sell_price)}}</td>
                                     @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
                                         <td class="align-middle">
                                             <div class="btn-group" role="group">

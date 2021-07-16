@@ -16,7 +16,8 @@ class ItemMasterController extends Controller
     {
         $this->middleware($this->allowedAccess([
             UserLevel::OWNER,
-            UserLevel::WAREHOUSE
+            UserLevel::WAREHOUSE,
+            UserLevel::SUPPLIER,
         ]));
     }
 
@@ -35,6 +36,7 @@ class ItemMasterController extends Controller
             'category_id' => 'required',
             'qty' => 'required',
             'price' => 'required',
+            'min_stock' => 'required',
         ]);
         $data = $request->all();
         unset($data['_token']);
@@ -48,6 +50,7 @@ class ItemMasterController extends Controller
                 'item_id' => $action_master->id,
                 'qty' => $data['qty'],
                 'sell_price' => $data['price'],
+                'min_stock' => $data['min_stock'],
                 'status' => StockStatus::ACTIVE,
             ]);
             if ($action_child){

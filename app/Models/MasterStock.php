@@ -12,15 +12,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class MasterStock
- * 
+ *
  * @property int $id
  * @property int $item_id
  * @property int $qty
  * @property int $sell_price
+ * @property int $min_stock
  * @property int $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property MasterItem $master_item
  * @property Collection|SellTransactionDetail[] $sell_transaction_details
  *
@@ -34,6 +35,7 @@ class MasterStock extends Model
 		'item_id' => 'int',
 		'qty' => 'int',
 		'sell_price' => 'int',
+		'min_stock' => 'int',
 		'status' => 'int'
 	];
 
@@ -41,6 +43,7 @@ class MasterStock extends Model
 		'item_id',
 		'qty',
 		'sell_price',
+		'min_stock',
 		'status'
 	];
 

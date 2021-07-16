@@ -109,21 +109,21 @@ class Gateway
                         ]);
                         $event->menu->add([
                             "text" => "Supplier Stock",
-                            "route" => "super.role.index",
+                            "route" => "stock.supplier.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
                             "text" => "Buy Transaction",
-                            "route" => "super.role.index",
+                            "route" => "buy.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-chart-line"
                         ]);
                         $event->menu->add(['header' => 'Report']);
                         $event->menu->add([
                             "text" => "Buy Report",
-                            "route" => "super.role.index",
+                            "route" => "buy.report.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
@@ -134,21 +134,21 @@ class Gateway
                         $event->menu->add(['header' => 'Master Data',]);
                         $event->menu->add([
                             "text" => "Item",
-                            "route" => "super.role.index",
+                            "route" => "item.index",
                             "shift" => "ml-2",
-                            "icon" => "fa fa-key"
+                            "icon" => "fa fa-book"
                         ]);
                         $event->menu->add(['header' => 'Stock',]);
                         $event->menu->add([
                             "text" => "Stock",
-                            "route" => "super.role.index",
+                            "route" => "stock.supplier.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
                             "text" => "Sell Transaction",
-                            "route" => "super.role.index",
+                            "route" => "buy.report.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
@@ -159,7 +159,7 @@ class Gateway
                         $event->menu->add(['header' => 'Master Data',]);
                         $event->menu->add([
                             "text" => "Supplier",
-                            "route" => "super.role.index",
+                            "route" => "supplier.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-user"
                         ]);
@@ -184,20 +184,20 @@ class Gateway
                         ]);
                         $event->menu->add([
                             "text" => "Supplier Stock",
-                            "route" => "super.role.index",
+                            "route" => "stock.supplier.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
                         $event->menu->add(['header' => 'Report',]);
                         $event->menu->add([
                             "text" => "Buy Report",
-                            "route" => "super.role.index",
+                            "route" => "buy.report.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);
                         $event->menu->add([
                             "text" => "Sell Report",
-                            "route" => "super.role.index",
+                            "route" => "sell.report.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-key"
                         ]);

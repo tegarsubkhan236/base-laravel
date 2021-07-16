@@ -18,7 +18,7 @@ class CreateBuyTransactionsTable extends Migration
             $table->integer('user_id')->index('user_id');
             $table->integer('supplier_id')->index('supplier_id');
             $table->integer('status');
-            $table->integer('note')->nullable();
+            $table->text('note')->nullable();
             $table->date('created_at');
             $table->date('updated_at')->nullable();
         });

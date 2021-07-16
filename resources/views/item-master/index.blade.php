@@ -4,81 +4,100 @@
 
 @section('content_header')@stop
 
+@php
+    use \Illuminate\Support\Facades\Auth;
+    use \App\Models\RoleUser;
+    $userRole = RoleUser::where('user_id',Auth::id())->first()->role_id;
+@endphp
+
 @section('content')
     <div class="row">
-        <div class="col-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="text-center bg-olive mt-2">
-                        @if(isset($edit_item))
-                            Edit
-                        @else
-                            Add
-                        @endif
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <form
-                        action="{{isset($edit_item) ? route('item.update',[$edit_item->id]) : route('item.store')}}"
-                        method="POST">
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                <label for="name">
-                                    Name
-                                </label>
-                                <input id="name" name='name' value="{{@$edit_item['name']}}" class="form-control"
-                                       type="text"/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-12 form-group">
-                                <label for="category">
-                                    Category
-                                </label>
-                                <select name="category_id" id="category" class="form-control">
-                                    <option value="" hidden>--Select Category--</option>
-                                    @foreach($category as $item)
-                                        <option
-                                            value="{{$item->id}}" {{isset($edit_item)?($item->id == $edit_item->item_category->id ? 'selected':''):''}}>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        @if(!isset($edit_item))
+        @if($userRole == \App\Casts\UserLevel::WAREHOUSE || $userRole == \App\Casts\UserLevel::OWNER)
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center bg-olive mt-2">
+                            @if(isset($edit_item))
+                                Edit
+                            @else
+                                Add
+                            @endif
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form
+                            action="{{isset($edit_item) ? route('item.update',[$edit_item->id]) : route('item.store')}}"
+                            method="POST">
+                            @csrf
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="qty">
-                                        Initial Quantity
+                                    <label for="name">
+                                        Name
                                     </label>
-                                    <input id="qty" name='qty' value="{{old('qty')}}" class="form-control"
-                                           type="number"/>
+                                    <input id="name" name='name' value="{{@$edit_item['name']}}" class="form-control"
+                                           type="text"/>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 form-group">
-                                    <label for="price">
-                                        Initial Sell Price
+                                    <label for="category">
+                                        Category
                                     </label>
-                                    <input id="price" name='price' value="{{old('sell_price')}}" class="form-control"
-                                           type="number"/>
+                                    <select name="category_id" id="category" class="form-control">
+                                        <option value="" hidden>--Select Category--</option>
+                                        @foreach($category as $item)
+                                            <option
+                                                value="{{$item->id}}" {{isset($edit_item)?($item->id == $edit_item->item_category->id ? 'selected':''):''}}>{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                        @endif
-                        <div class="form-row">
-                            <div class="col-md-2 offset-8 pt-3 form-group">
-                                @if(isset($edit_item))
-                                    <button type="submit" class="btn btn-warning">Update</button>
-                                @else
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                @endif
+                            @if(!isset($edit_item))
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="qty">
+                                            Initial Quantity
+                                        </label>
+                                        <input id="qty" name='qty' value="{{old('qty')}}" class="form-control"
+                                               type="number"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="price">
+                                            Initial Sell Price
+                                        </label>
+                                        <input id="price" name='price' value="{{old('sell_price')}}"
+                                               class="form-control"
+                                               type="number"/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <label for="min_stock">
+                                            Minimum Stock
+                                        </label>
+                                        <input id="min_stock" name='min_stock' value="{{old('min_stock')}}"
+                                               class="form-control"
+                                               type="number"/>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="form-row">
+                                <div class="col-md-2 offset-8 pt-3 form-group">
+                                    @if(isset($edit_item))
+                                        <button type="submit" class="btn btn-warning">Update</button>
+                                    @else
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-9">
+        @endif
+        <div class="{{$userRole != \App\Casts\UserLevel::SUPPLIER ? 'col-9' : 'col-12'}}">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
@@ -102,7 +121,9 @@
                                 <th class="align-middle" style="width: 50px;" rowspan="2">No</th>
                                 <th>Name</th>
                                 <th>Category</th>
-                                <th class="align-middle" rowspan="2">Action</th>
+                                @if($userRole == \App\Casts\UserLevel::WAREHOUSE || $userRole == \App\Casts\UserLevel::OWNER)
+                                    <th class="align-middle" rowspan="2">Action</th>
+                                @endif
                             </tr>
                             <tr>
                                 <td>Name</td>
@@ -116,24 +137,25 @@
                                     <td class="align-middle">{{$item->name}}</td>
                                     <td class="align-middle"><span
                                             class="badge badge-info">{{$item->item_category->name}}</span></td>
-                                    <td class="align-middle">
-                                        <div class="btn-group" role="group">
-                                            <a href="{{route('item.edit',[$item->id])}}">
-                                                <button type="button" class="edit btn btn-tool btn-outline-info">
-                                                    <i class="fa fa-pen"></i>
-                                                </button>
-                                            </a>
-                                            <form id="delete-item-form" action="{{route('item.destroy',$item->id)}}"
-                                                  method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button data-id="{{ $item->id }}" id="delete-item"
-                                                        class="btn btn-tool btn-outline-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    @if($userRole == \App\Casts\UserLevel::WAREHOUSE || $userRole == \App\Casts\UserLevel::OWNER)
+                                        <td class="align-middle">
+                                            <div class="btn-group" role="group">
+                                                <a href="{{route('item.edit',[$item->id])}}">
+                                                    <button type="button" class="edit btn btn-tool btn-outline-info">
+                                                        <i class="fa fa-pen"></i>
+                                                    </button>
+                                                </a>
+                                                <form action="{{route('item.destroy',$item->id)}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button data-id="{{ $item->id }}"
+                                                            class="btn btn-tool btn-outline-danger delete-item">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
@@ -191,9 +213,8 @@
             });
         });
         // Delete record
-        $(document).on('click', '#delete-item', function (e) {
+        $(document).on('click', '.delete-item', function (e) {
             e.preventDefault();
-            let id = $(this).data('id');
             Swal.fire({
                 title: 'Are you sure ?',
                 text: "You won't be able to revert this !",
@@ -204,7 +225,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#delete-item-form').submit();
+                    $(e.target).closest('form').submit();
                 }
             })
         });

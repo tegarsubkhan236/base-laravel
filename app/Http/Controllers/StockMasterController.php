@@ -41,12 +41,14 @@ class StockMasterController extends Controller
         $request->validate([
             "qty" => "required",
             "price" => "required",
+            "min_stock" => "required",
         ]);
         $data = $request->all();
         unset($data['_token']);
         $action = MasterStock::where('id',$id)->update([
             'qty' => $data['qty'],
-            'sell_price' => $data['price']
+            'sell_price' => $data['price'],
+            'min_stock' => $data['min_stock'],
         ]);
         if ($action){
             return redirect()->back()->with(['msg'=>'Data has been updated']);

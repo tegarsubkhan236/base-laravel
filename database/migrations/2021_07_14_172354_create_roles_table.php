@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTemporaryFilesTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTemporaryFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('temporary_files', function (Blueprint $table) {
-            $table->id();
-            $table->string('folder');
-            $table->string('filename');
-            $table->timestamps();
+        Schema::create('roles', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->string('name', 100);
+            $table->date('created_at')->nullable();
+            $table->date('updated_at')->nullable();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateTemporaryFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('temporary_files');
+        Schema::dropIfExists('roles');
     }
 }
