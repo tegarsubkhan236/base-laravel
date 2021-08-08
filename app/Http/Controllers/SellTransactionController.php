@@ -10,6 +10,7 @@ use App\Models\SellTransaction;
 use App\Models\SellTransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class SellTransactionController extends Controller
 {
@@ -49,9 +50,9 @@ class SellTransactionController extends Controller
         for ($i = 0; $i < $countItem; $i++) {
             $stock = MasterStock::with('master_item')->where('item_id', $data['item_id'][$i])->first();
 
-            if ($stock['qty'] - $data['qty'][$i] < $stock['min_stock']){
-                return redirect()->back()->withErrors(['msg' => 'Min Stock for '.$stock['master_item']['name']]);
-            }
+//            if ($stock['qty'] - $data['qty'][$i] < $stock['min_stock']){
+//                return redirect()->back()->withErrors(['msg' => 'Min Stock for '.$stock['master_item']['name']]);
+//            }
             if ($stock['qty'] - $data['qty'][$i] < 0) {
                 return redirect()->back()->withErrors(['msg' => "Stock not available for ".$stock['master_item']['name']]);
             }
@@ -92,6 +93,19 @@ class SellTransactionController extends Controller
         }
         $title = 'Sell Report';
         return view('sell-report.index', compact('data', 'title'));
+    }
+
+    public function print_struck($id)
+    {
+        $pdf = PDF::loadview('sell-report.struck',[
+            'title' => 'Lumbung Indonesia',
+            'name' => 'waluyo',
+            'date' => '2 agustus 2021',
+            'other' => ' ',
+            'transaction' => '123123wsadawqw',
+            'note' => 'cukkkkkkkk'
+        ]);
+        return $pdf->download('cek.pdf');
     }
 
     public function sell_report_filter(Request $request)

@@ -110,7 +110,7 @@
                                 <th>Quantity</th>
                                 <th>Min Stock</th>
                                 <th>Sell Price</th>
-                                @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
+                                @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE && Route::currentRouteName() != 'stock.opname.index')
                                     <th class="align-middle" rowspan="2">Action</th>
                                 @endif
                             </tr>
@@ -133,7 +133,7 @@
                                     <td class="align-middle">{{number_format($item->qty)}}</td>
                                     <td class="align-middle">{{number_format($item->min_stock)}}</td>
                                     <td class="align-middle">Rp. {{number_format($item->sell_price)}}</td>
-                                    @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE)
+                                    @if($userRole->role_id == \App\Casts\UserLevel::OWNER || $userRole->role_id == \App\Casts\UserLevel::WAREHOUSE && Route::currentRouteName() != 'stock.opname.index')
                                         <td class="align-middle">
                                             <div class="btn-group" role="group">
                                                 <a href="{{route('stock.master.edit',[$item->id])}}">

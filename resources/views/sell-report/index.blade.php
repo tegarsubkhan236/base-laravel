@@ -107,6 +107,9 @@
                                                data-target="#detail{{$item->id}}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
+                                            <a href="{{route('sell.report.print_struck',['id'=> $item->id])}}" class="btn btn-tool btn-outline-info">
+                                                <i class="fa fa-file"></i>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

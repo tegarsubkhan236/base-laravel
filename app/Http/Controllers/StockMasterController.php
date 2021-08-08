@@ -9,6 +9,7 @@ use App\Models\ItemCategory;
 use App\Models\MasterItem;
 use App\Models\MasterStock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class StockMasterController extends Controller
 {
@@ -54,5 +55,13 @@ class StockMasterController extends Controller
             return redirect()->back()->with(['msg'=>'Data has been updated']);
         }
         return redirect()->back()->withErrors(['msg'=>'Data failed to update']);
+    }
+
+    public function opname()
+    {
+        $data = MasterStock::with('master_item','master_item.item_category')
+            ->whereColumn('qty', '<', 'min_stock')->get();
+        $title = "Stock Opname";
+        return view('stock-master.index', compact('data','title'));
     }
 }

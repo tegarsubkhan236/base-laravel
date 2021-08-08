@@ -92,6 +92,10 @@ Route::prefix('stock')->name('stock.')->group(function () {
         Route::post('/update/{id}', [StockMasterController::class, 'update'])->name('update');
         Route::get('/destroy', [StockMasterController::class, 'destroy'])->name('destroy');
     });
+    // Stock Opname
+    Route::prefix('/opname')->name('opname.')->group(function () {
+        Route::get('/', [StockMasterController::class, 'opname'])->name('index');
+    });
     // Stock Supplier
     Route::prefix('/supplier')->name('supplier.')->group(function () {
         Route::get('/', [StockSupplierController::class, 'index'])->name('index');
@@ -111,6 +115,7 @@ Route::prefix('sell')->name('sell.')->group(function (){
     Route::post('/store', [SellTransactionController::class,'store'])->name('store');
     Route::prefix('/report')->name('report.')->group(function () {
         Route::get('/', [SellTransactionController::class,'sell_report'])->name('index');
+        Route::get('/print_struck/{id}', [SellTransactionController::class,'print_struck'])->name('print_struck');
         Route::post('/filter', [SellTransactionController::class,'sell_report_filter'])->name('filter');
     });
 });

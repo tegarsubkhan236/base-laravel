@@ -69,6 +69,12 @@ class Gateway
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
+                        $event->menu->add([
+                            "text" => "Stock Opname",
+                            "route" => "stock.opname.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-warehouse"
+                        ]);
                         $event->menu->add(['header' => 'Transaction',]);
                         $event->menu->add([
                             "text" => "Sell Transaction",
@@ -104,6 +110,12 @@ class Gateway
                         $event->menu->add([
                             "text" => "Stock",
                             "route" => "stock.master.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-warehouse"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Stock Opname",
+                            "route" => "stock.opname.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
@@ -179,6 +191,12 @@ class Gateway
                         $event->menu->add([
                             "text" => "Stock",
                             "route" => "stock.master.index",
+                            "shift" => "ml-2",
+                            "icon" => "fa fa-warehouse"
+                        ]);
+                        $event->menu->add([
+                            "text" => "Stock Opname",
+                            "route" => "stock.opname.index",
                             "shift" => "ml-2",
                             "icon" => "fa fa-warehouse"
                         ]);
