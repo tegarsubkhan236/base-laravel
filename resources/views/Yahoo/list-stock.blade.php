@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title text-bold">Sector : {{$sector}}</h4><br>
-                    <h5 class="card-title text-bold">Sub Sector : {{$subSector}}</h5>
+                    <h5 class="card-title text-bold">Sub Sector : {{$sub_sector}}</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -36,8 +36,8 @@
                                     <td>Rp. {{number_format($item->actualPrice)}}</td>
                                     <td>{{date_format_diffForHumans($item->updated_at)}}</td>
                                     <td class="text-center">
-                                        @if($subSector != null)
-                                        <a href="{{route('yahoo.stock.detail',['sector'=>$sector, 'subSector'=>$subSector, 'id'=>$item->id])}}"
+                                        @if($sub_sector != null)
+                                        <a href="{{route('yahoo.stock.detail',['sector'=>$sector, 'sub_sector'=>$sub_sector, 'id'=>$item->id])}}"
                                            class="btn btn-tool btn-outline-info">
                                             <i class="fas fa-eye"></i>
                                         </a>
@@ -57,7 +57,7 @@
                         <div>
                         </div>
                         <div>
-                            <a href="{{route('yahoo.list.subSector',['sector'=>$sector])}}" class="btn btn-sm btn-danger">Back</a>
+                            <a href="{{route('yahoo.list.sub_sector',['sector'=>$sector])}}" class="btn btn-sm btn-danger">Back</a>
                         </div>
                     </div>
                 </div>

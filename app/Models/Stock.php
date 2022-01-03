@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $code
  * @property string $name
  * @property string $sector
- * @property string $subSector
+ * @property string $sub_sector
  * @property string $summary
  * @property string|null $avatar
  * @property int $netIncome
@@ -56,7 +56,7 @@ class Stock extends Model
 		'code',
 		'name',
 		'sector',
-		'subSector',
+		'sub_sector',
 		'summary',
 		'avatar',
 		'netIncome',

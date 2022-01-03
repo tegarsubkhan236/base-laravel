@@ -18,7 +18,7 @@ class CreateStocksTable extends Migration
             $table->string('code', 10);
             $table->string('name', 50);
             $table->string('sector', 50);
-            $table->string('subSector', 100)->nullable();
+            $table->string('sub_sector', 100)->nullable();
             $table->text('summary');
             $table->string('avatar', 100)->nullable();
             $table->bigInteger('netIncome');

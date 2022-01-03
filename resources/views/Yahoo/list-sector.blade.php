@@ -25,7 +25,7 @@
                                 <div class="icon">
                                     <i class="fas fa-chart-bar"></i>
                                 </div>
-                                <a href="{{route('yahoo.list.subSector',['sector' => $item->sector])}}" class="small-box-footer">
+                                <a href="{{route('yahoo.list.sub_sector',['sector' => $item->sector])}}" class="small-box-footer">
                                     More info <i class="fas fa-arrow-circle-right"></i>
                                 </a>
                             </div>

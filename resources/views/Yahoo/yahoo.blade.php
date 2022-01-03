@@ -155,7 +155,7 @@
                                                    value="{{$symbol}}">
                                             <input hidden name="sector" type="text"
                                                    value="{{$profile['assetProfile']['sector']}}">
-                                            <input hidden name="subSector" type="text"
+                                            <input hidden name="sub_sector" type="text"
                                                    value="{{$profile['assetProfile']['industry']}}">
                                             <input hidden name="summary" type="text"
                                                    value="{{strtok($profile['assetProfile']['longBusinessSummary'], '.')}}">

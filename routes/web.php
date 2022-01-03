@@ -18,9 +18,9 @@ Route::name('yahoo')->prefix('yahoo/')->group(function (){
     Route::post('search', [YahooFinanceController::class, 'search'])->name('.search');
     // List
     Route::get('list-sector', [YahooFinanceController::class, 'list_sector'])->name('.list.sector');
-    Route::get('list-subSector/{sector}', [YahooFinanceController::class, 'list_subSector'])->name('.list.subSector');
-    Route::get('list-stock/{sector}/{subSector?}', [YahooFinanceController::class, 'list_stock'])->name('.list.stock');
-    Route::get('stock-detail/{sector}/{subSector?}/{id}', [YahooFinanceController::class, 'stock_detail'])->name('.stock.detail');
+    Route::get('list-sub_sector/{sector}', [YahooFinanceController::class, 'list_subSector'])->name('.list.sub_sector');
+    Route::get('list-stock/{sector}/{sub_sector?}', [YahooFinanceController::class, 'list_stock'])->name('.list.stock');
+    Route::get('stock-detail/{sector}/{sub_sector?}/{id}', [YahooFinanceController::class, 'stock_detail'])->name('.stock.detail');
     // Compare
     Route::get('stock-compare', [YahooFinanceController::class, 'stock_compare'])->name('.stock.compare');
     // Action

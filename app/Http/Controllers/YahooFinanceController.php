@@ -34,14 +34,11 @@ class YahooFinanceController extends Controller
         $data = $request->all();
         $symbol = $data['symbol'] . ".JK";
         $profile = $this->getProfile($symbol);
-        if (!isset($profile['assetProfile'])) {
-            return redirect()->back()->with('error', 'Stock Not Found');
-        }
         $statistic = $this->getStatistic($symbol);
-        if (!isset($statistic['defaultKeyStatistics'])) {
-            return redirect()->back()->with('error', 'Stock Not Found');
+        if (!isset($profile['quoteType'])){
+            return redirect()->back()->with('error','Your access to this service has been limited');
         }
-        if (!isset($statistic['defaultKeyStatistics']['netIncomeToCommon'])){
+        if (!isset($statistic['defaultKeyStatistics']) || !isset($statistic['defaultKeyStatistics']['netIncomeToCommon']) || !isset($profile['assetProfile'])) {
             return redirect()->back()->with('error', 'Stock Not Found');
         }
         if (isset($profile['assetProfile']['website'])){
@@ -62,7 +59,7 @@ class YahooFinanceController extends Controller
     public function list_sector()
     {
         $data = DB::table('stocks')
-            ->select('sector', DB::raw('count(subSector) as total'))
+            ->select('sector', DB::raw('count(sub_sector) as total'))
             ->groupBy('sector')
             ->get();
         return view('Yahoo.list-sector',[
@@ -78,8 +75,8 @@ class YahooFinanceController extends Controller
     {
         $data = DB::table('stocks')
             ->where(['sector'=>$sector])
-            ->select('subSector', DB::raw('count(*) as total'))
-            ->groupBy('subSector')
+            ->select('sub_sector', DB::raw('count(*) as total'))
+            ->groupBy('sub_sector')
             ->get();
         return view('Yahoo.list-subSector',[
             'data' => $data,
@@ -87,32 +84,23 @@ class YahooFinanceController extends Controller
         ]);
     }
 
-    public function list_stock($sector,$subSector = null)
+    public function list_stock($sector,$sub_sector = null)
     {
         $data = Stock::where([
             'sector'=> $sector,
-            'subSector' => $subSector
+            'sub_sector' => $sub_sector
         ])->get();
         return view('Yahoo.list-stock',[
             'data' => $data,
             'sector' => $sector,
-            'subSector' => $subSector,
+            'sub_sector' => $sub_sector,
         ]);
     }
 
-//    public function list_sector($sector)
-//    {
-//        $data = Stock::where('sector',$sector)->get();
-//        return view('Yahoo.list-stock',[
-//            'data' => $data,
-//            'sector' => $sector,
-//        ]);
-//    }
-
-    public function stock_detail($sector, $subSector = null, $id)
+    public function stock_detail($sector, $sub_sector = null, $id)
     {
         $data = Stock::where(['id'=>$id])->first();
-        $totalData = Stock::where(['sector'=>$sector,'subSector'=>$subSector])->get();
+        $totalData = Stock::where(['sector'=>$sector,'sub_sector'=>$sub_sector])->get();
         $totalPER = 0;
         foreach ($totalData as $x){
             $totalPER += $x->actualPrice/($x->netIncome/$x->outstandingShare);
@@ -133,7 +121,7 @@ class YahooFinanceController extends Controller
             'code' => 'required',
             'name' => 'required',
             'sector' => 'required',
-            'subSector' => 'required',
+            'sub_sector' => 'required',
             'summary' => 'required',
             'avatar' => 'nullable',
             'netIncome' => 'required',
@@ -152,13 +140,13 @@ class YahooFinanceController extends Controller
                 'code' => $data['code'],
                 'name' => $data['name'],
                 'sector' => $data['sector'],
-                'subSector' => $data['subSector'],
+                'sub_sector' => $data['sub_sector'],
             ],
             [
                 'code' => $data['code'],
                 'name' => $data['name'],
                 'sector' => $data['sector'],
-                'subSector' => $data['subSector'],
+                'sub_sector' => $data['sub_sector'],
                 'summary' => $data['summary'],
                 'avatar' => $data['avatar'],
                 'netIncome' => $data['netIncome'],

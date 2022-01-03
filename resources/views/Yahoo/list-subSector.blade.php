@@ -26,13 +26,13 @@
                             <div class="col-lg-3 col-6 mt-3">
                                 <div class="small-box bg-danger">
                                     <div class="inner">
-                                        <h5>{{$item->subSector != null ? $item->subSector : 'UnGrouping'}}</h5>
+                                        <h5>{{$item->sub_sector != null ? $item->sub_sector : 'UnGrouping'}}</h5>
                                         <p>{{$item->total}} Stock</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-chart-bar"></i>
                                     </div>
-                                    <a href="{{route('yahoo.list.stock',['sector' => $sector,'subSector' => $item->subSector])}}" class="small-box-footer">
+                                    <a href="{{route('yahoo.list.stock',['sector' => $sector,'sub_sector' => $item->sub_sector])}}" class="small-box-footer">
                                         More info <i class="fas fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
