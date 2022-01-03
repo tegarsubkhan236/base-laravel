@@ -19,7 +19,7 @@ trait YH_Finance_Request
             $response = $client->request($method, $requestUrl, [
                 'query' => $queryParams,
                 'headers' => [
-                    'x-rapidapi-key' => 'f4ed004797msheaeddf3037a3fffp1f1915jsn61a81cfa4c9c',
+                    'x-rapidapi-key' => '26c0251fc0msh95d36c850eb33b2p13a0c7jsn37655b3762c2',
                     'x-rapidapi-host' => 'yh-finance.p.rapidapi.com'
                 ],
             ]);
