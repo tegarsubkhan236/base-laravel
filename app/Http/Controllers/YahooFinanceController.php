@@ -141,8 +141,6 @@ class YahooFinanceController extends Controller
             [
                 'code' => $data['code'],
                 'name' => $data['name'],
-                'sector' => $data['sector'],
-                'sub_sector' => $data['sub_sector'],
             ],
             [
                 'code' => $data['code'],
