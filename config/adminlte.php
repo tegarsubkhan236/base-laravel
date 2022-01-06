@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>KAFAL</b>AFI',
+    'logo' => '<b>STOCK</b>HEIST',
     'logo_img' => 'MyLogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => true,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => true,
@@ -129,7 +129,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-light-danger elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-dark navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -229,7 +229,10 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => false,
+            'url'          => 'yahoo/search',
+            'method'       => 'post',
+            'input_name'   => 'symbol',
+            'topnav_right' => true,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -238,26 +241,26 @@ return [
 
         // Sidebar items:
         [
-            'text'        => 'home',
+            'text'        => 'Home',
             'url'         => 'home',
             'icon'        => 'fas fa-fw fa-home',
         ],
         ['header' => 'Yahoo Finance'],
         [
-            'text' => 'Stocks',
+            'text' => 'All Stocks',
             'url'  => 'yahoo/list-sector',
-            'icon' => 'fas fa-list-ul',
+//            'icon' => 'fas fa-list-ul',
         ],
         [
             'text' => 'Compare Stocks',
             'url'  => 'yahoo/stock-compare',
-            'icon' => 'fas fa-list-ul',
+//            'icon' => 'fas fa-list-ul',
         ],
-        [
-            'text' => 'Search Stock',
-            'url'  => 'yahoo/search',
-            'icon' => 'fas fa-search-dollar',
-        ],
+//        [
+//            'text' => 'Search Stock',
+//            'url'  => 'yahoo/search',
+//            'icon' => 'fas fa-search-dollar',
+//        ],
     ],
 
     /*

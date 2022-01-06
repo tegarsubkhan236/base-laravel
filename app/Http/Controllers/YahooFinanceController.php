@@ -61,6 +61,7 @@ class YahooFinanceController extends Controller
         $data = DB::table('stocks')
             ->select('sector', DB::raw('count(sub_sector) as total'))
             ->groupBy('sector')
+            ->orderBy('sector','asc')
             ->get();
         return view('Yahoo.list-sector',[
             'data' => $data
@@ -77,6 +78,7 @@ class YahooFinanceController extends Controller
             ->where(['sector'=>$sector])
             ->select('sub_sector', DB::raw('count(*) as total'))
             ->groupBy('sub_sector')
+            ->orderBy('sub_sector','asc')
             ->get();
         return view('Yahoo.list-subSector',[
             'data' => $data,

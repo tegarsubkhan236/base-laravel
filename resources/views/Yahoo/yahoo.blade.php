@@ -7,34 +7,34 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12 mt-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Search Stock</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('yahoo.search')}}" method="POST" >
-                        @csrf
-                        <div class="form-row">
-                            <div class="col-md-11 form-group">
-                                <label for="symbol" class="col-form-label">Symbol of Equity</label>
-                                <input type="text" name="symbol" id="symbol" class="form-control">
-                            </div>
-                            <div class="col-md-1 pt-4 mt-2 form-group">
-                                <button type="submit" class="btn btn-danger">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="row">--}}
+{{--        <div class="col-md-12 mt-3">--}}
+{{--            <div class="card">--}}
+{{--                <div class="card-header">--}}
+{{--                    <h4 class="card-title">Search Stock</h4>--}}
+{{--                </div>--}}
+{{--                <div class="card-body">--}}
+{{--                    <form action="{{route('yahoo.search')}}" method="POST" >--}}
+{{--                        @csrf--}}
+{{--                        <div class="form-row">--}}
+{{--                            <div class="col-md-11 form-group">--}}
+{{--                                <label for="symbol" class="col-form-label">Symbol of Equity</label>--}}
+{{--                                <input type="text" name="symbol" id="symbol" class="form-control">--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-1 pt-4 mt-2 form-group">--}}
+{{--                                <button type="submit" class="btn btn-danger">Search</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     @if(isset($profile))
         <form action="{{route('yahoo.save')}}" method="POST">
             @csrf
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 mt-3">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 mt-3">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="container d-flex justify-content-center">
