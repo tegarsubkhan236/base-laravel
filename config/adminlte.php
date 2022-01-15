@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'KAFALAFI',
-    'title_prefix' => 'KAFALAFI',
+    'title' => 'StockHeist',
+    'title_prefix' => '',
     'title_postfix' => '',
 
     /*
@@ -86,8 +86,8 @@ return [
     'layout_topnav' => true,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => true,
-    'layout_fixed_footer' => true,
+    'layout_fixed_navbar' => null,
+    'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
     /*
@@ -130,7 +130,7 @@ return [
     'classes_sidebar' => 'sidebar-light-danger elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-dark navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_topnav_nav' => 'navbar-expand-md',
     'classes_topnav_container' => 'container',
 
     /*
@@ -226,41 +226,6 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'url'          => 'yahoo/search',
-            'method'       => 'post',
-            'input_name'   => 'symbol',
-            'topnav_right' => true,
-        ],
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => false,
-        ],
-
-        // Sidebar items:
-        [
-            'text'        => 'Home',
-            'url'         => 'home',
-            'icon'        => 'fas fa-fw fa-home',
-        ],
-        ['header' => 'Yahoo Finance'],
-        [
-            'text' => 'All Stocks',
-            'url'  => 'yahoo/list-sector',
-//            'icon' => 'fas fa-list-ul',
-        ],
-        [
-            'text' => 'Compare Stocks',
-            'url'  => 'yahoo/stock-compare',
-//            'icon' => 'fas fa-list-ul',
-        ],
-//        [
-//            'text' => 'Search Stock',
-//            'url'  => 'yahoo/search',
-//            'icon' => 'fas fa-search-dollar',
-//        ],
     ],
 
     /*

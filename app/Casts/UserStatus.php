@@ -1,11 +1,22 @@
 <?php
+    namespace App\Casts;
 
-namespace App\Casts;
+    class UserStatus
+    {
+        public const ACTIVE = 1;
+        public const INACTIVE = 0;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-
-class UserStatus
-{
-    const ACTIVE = 1;
-    const INACTIVE = 0;
-}
+        public static function lang($status): string
+        {
+            switch ($status){
+                case self::ACTIVE :
+                    return "ACTIVE";
+                    break;
+                case self::INACTIVE :
+                    return "INACTIVE";
+                    break;
+                default :
+                    return "Unidentified";
+            }
+        }
+    }

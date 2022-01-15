@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Casts\UserLevel;
 use App\Models\Stock;
 use App\Traits\Brandfetch_Request;
 use App\Traits\YH_Finance_Request;
@@ -18,6 +19,13 @@ class YahooFinanceController extends Controller
 
     public function __construct()
     {
+        $this->middleware($this->allowedAccess(
+            [
+                UserLevel::SUPER_ADMIN,
+                UserLevel::ADMIN,
+                UserLevel::STOCK_USER,
+            ]
+        ));
         $this->middleware('auth');
     }
 
