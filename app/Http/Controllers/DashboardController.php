@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Casts\UserLevel;
-use App\Models\Stock;
 use App\Traits\NewsAPI_Request;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     use NewsAPI_Request;
+
     public function __construct()
     {
         $this->middleware($this->allowedAccess(
@@ -23,14 +21,29 @@ class DashboardController extends Controller
         ));
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-//        $response = $this->newsRequest('GET', 'v2/top-headlines', [
-//            'country' => 'id',
-//            'category' => 'business'
-//        ]);
-//        return $response;
+        $data = $request->all();
+        unset($data['_token']);
+        if (!isset($data['category'])){
+            $data['category'] = 'business';
+        }
+        if (!isset($data['page'])){
+            $data['page'] = 1;
+        }
+        $category = $data['category'];
+        $page = $data['page'];
+        $headlines = $this->getHeadlines($category, $page);
+        return view('dashboard',compact('headlines','category'));
+    }
 
-        return view('dashboard');
+    private function getHeadlines($category, $page)
+    {
+        return $this->newsRequest('GET', 'v2/top-headlines', [
+            'country' => 'id',
+            'category' => $category,
+            'page'=> $page,
+            'pageSize' => 9
+        ]);
     }
 }
