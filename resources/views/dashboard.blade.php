@@ -3,19 +3,15 @@
 @section('header')
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <span class="text-uppercase page-subtitle">Dashboard</span>
-            <h3 class="page-title">Blog Overview</h3>
+            @can('edit-users')
+                <span class="text-uppercase page-subtitle">Dashboard</span>
+                <h3 class="page-title">Blog Overview</h3>
+            @endcan
+            @role('developer)
+                <span class="text-uppercase page-subtitle">Dashboard</span>
+                <h3 class="page-title">Blog Overview</h3>
+            @endrole
         </div>
-    </div>
-@endsection
-
-@section('alert')
-    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <i class="fa fa-check mx-2"></i>
-        <strong>Success!</strong> Your profile has been updated!
     </div>
 @endsection
 

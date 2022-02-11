@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{asset('assets/styles/shards-dashboards.1.1.0.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/extras.1.1.0.min.css')}}">
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    @stack('css')
 </head>
 <body class="h-100">
 @include('layout.components.color-switcher')
@@ -37,5 +38,6 @@
 <script src="{{asset('assets/scripts/extras.1.1.0.min.js')}}"></script>
 <script src="{{asset('assets/scripts/shards-dashboards.1.1.0.min.js')}}"></script>
 <script src="{{asset('assets/scripts/app/app-blog-overview.1.1.0.js')}}"></script>
+@stack('js')
 </body>
 </html>

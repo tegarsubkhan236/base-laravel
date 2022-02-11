@@ -24,13 +24,15 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-nowrap"  data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons">vertical_split</i>
-                    <span>Blog Posts</span>
+                    <span>User Setting</span>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="user-profile-lite.html">
-                        <i class="material-icons">&#xE7FD;</i> Profile</a>
-                    <a class="dropdown-item" href="#">
-                        <i class="material-icons">&#xE879;</i> Logout </a>
+                    <a class="dropdown-item" href="{{route('user-setting.user')}}">
+                        <i class="material-icons">&#xE7FD;</i> User</a>
+                    <a class="dropdown-item" href="{{route('user-setting.role')}}">
+                        <i class="material-icons">&#xE7FD;</i> Role</a>
+                    <a class="dropdown-item" href="{{route('user-setting.permission')}}">
+                        <i class="material-icons">&#xE7FD;</i> Permission</a>
                 </div>
             </li>
             <li class="nav-item">

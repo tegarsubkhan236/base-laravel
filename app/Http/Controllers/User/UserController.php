@@ -9,6 +9,11 @@ class UserController extends Controller
 {
     public function index()
     {
+        return view('user-setting.user');
+    }
+
+    public function profile()
+    {
         return view('user-profile.index');
     }
 }

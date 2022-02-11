@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasPermissionsTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable as Authenticate;
 use Illuminate\Auth\Authenticatable as AuthenticateTrait;
@@ -23,13 +24,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
+ * @property Collection|Permission[] $permissions
+ * @property Collection|Role[] $roles
+ *
  * @package App\Models
  */
 class User extends Model implements Authenticate
 {
-    use AuthenticateTrait;
-
-	protected $table = 'users';
+    use AuthenticateTrait, HasPermissionsTrait;
 
 	protected $dates = [
 		'email_verified_at'
@@ -47,4 +49,14 @@ class User extends Model implements Authenticate
 		'password',
 		'remember_token'
 	];
+
+	public function permissions()
+	{
+		return $this->belongsToMany(Permission::class, 'users_permissions');
+	}
+
+	public function roles()
+	{
+		return $this->belongsToMany(Role::class, 'users_roles');
+	}
 }
