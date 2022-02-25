@@ -6,11 +6,11 @@
 
 namespace App\Models;
 
-use App\Traits\HasPermissionsTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable as Authenticate;
 use Illuminate\Auth\Authenticatable as AuthenticateTrait;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Collection\Collection;
 
 /**
  * Class User
@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Model implements Authenticate
 {
-    use AuthenticateTrait, HasPermissionsTrait;
+    use AuthenticateTrait;
 
 	protected $dates = [
 		'email_verified_at'

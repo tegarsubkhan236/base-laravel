@@ -22,7 +22,7 @@ class AuthController extends Controller
 
     public function login_page()
     {
-        return view('login');
+        return view('landing.login');
     }
 
     public function login(Request $request): RedirectResponse
@@ -39,9 +39,9 @@ class AuthController extends Controller
         if (! Auth::attempt($credentials)){
             return back()->withErrors(['error'=>"Username / Password not valid"]);
         }
-//        if (Auth::user()->status !== UserStatus::ACTIVE) {
-//            return back()->withErrors(['warning' => "Account not active"]);
-//        }
+        if (Auth::user()->status !== UserStatus::ACTIVE) {
+            return back()->withErrors(['warning' => "Account not active"]);
+        }
         return redirect()->route('dashboard')->with(['message'=>"Welcome ". $credentials['name']]);
     }
 

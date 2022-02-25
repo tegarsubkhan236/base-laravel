@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('_layout.base')
 
 @section('header')
     <div class="page-header row no-gutters py-4">
