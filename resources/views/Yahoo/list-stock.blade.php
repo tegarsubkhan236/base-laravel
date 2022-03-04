@@ -42,9 +42,6 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         @endif
-{{--                                        <a href="" class="btn btn-tool btn-outline-danger">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
                                     </td>
                                 </tr>
                             @endforeach
