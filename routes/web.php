@@ -27,10 +27,12 @@ Route::group(['middleware' => ['gateway']], function() {
     Route::get('profile',[UserController::class,'profile'])->name('profile');
 
     Route::name('user-setting.')->prefix('user-setting/')->group(function (){
+        Route::get('user/list-user',[UserController::class,'user_list'])->name('user.user-list');
         Route::resource('user',UserController::class);
         Route::resource('role',RoleController::class);
         Route::resource('permission',PermissionController::class);
     });
 
+    Route::get('test/getList',[TestController::class,'getList'])->name('test.getList');
     Route::resource('test',TestController::class);
 });

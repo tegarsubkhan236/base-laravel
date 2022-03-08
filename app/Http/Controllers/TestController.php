@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TestCrud;
 use Illuminate\Http\Request;
+use DataTables;
 
 class TestController extends Controller
 {
@@ -15,10 +16,25 @@ class TestController extends Controller
         $this->middleware('permission:test-delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function getList(Request $request)
     {
-        $tests = TestCrud::all();
-        return view('test.test',compact('tests'));
+        if ($request->ajax()) {
+            $data = TestCrud::latest()->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+//                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a><a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = $row->id;
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+    }
+
+    public function index(Request $request)
+    {
+        return view('test.test');
     }
 
     public function create()

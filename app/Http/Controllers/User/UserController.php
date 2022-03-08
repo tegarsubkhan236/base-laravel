@@ -20,13 +20,15 @@ class UserController extends Controller
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
+    public function user_list()
+    {
+        $data = User::orderBy('id','DESC')->paginate(10);
+        return response()->json($data);
+    }
+
     public function index(Request $request)
     {
-        $data = User::all();
-//        dd($data);
-        return $data;
-//        $data = User::orderBy('id','DESC')->paginate(5);
-//        return view('user-setting.user',compact('data'));
+        return view('user-setting.user');
     }
 
     public function create()
